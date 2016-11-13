@@ -2,7 +2,7 @@
 #include <QtWidgets>
 
 #include "MainWindow.h"
-
+#include "Settings.h"
 #include "Log.h"
 
 using namespace std;
@@ -73,7 +73,7 @@ void MainWindow::createActions()
 
 void MainWindow::createMenus()
 {
-    bool showMenu = true;//Settings::Get().ShowMenu();
+    bool showMenu = BasicSettings::Get().IsShowMenu();
     if (showMenu) {
         fileMenu = menuBar()->addMenu(tr("&File"));
         fileMenu->addAction(connectDatabaseAct);
@@ -95,7 +95,7 @@ void MainWindow::createMenus()
 
 void MainWindow::createToolBars()
 {
-    bool showToolbar = true;//Settings::Get().ShowToolbar();
+    bool showToolbar = BasicSettings::Get().IsShowToolbar();
     if (showToolbar) {
         fileToolBar = addToolBar(tr("File"));
         fileToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);

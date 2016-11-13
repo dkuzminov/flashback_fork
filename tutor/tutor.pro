@@ -1,10 +1,12 @@
 QT      +=  core gui sql webkitwidgets
 
 HEADERS =   MainWindow.h \
-    Log.h
+    Log.h \
+    Settings.h
 SOURCES =   main.cpp \
     MainWindow.cpp \
-    Log.cpp
+    Log.cpp \
+    Settings.cpp
 
 FORMS += \
     MainWindow.ui
