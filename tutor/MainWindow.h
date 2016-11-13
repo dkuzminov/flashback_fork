@@ -8,12 +8,14 @@ class QAction;
 class QMenu;
 QT_END_NAMESPACE
 
+struct IGuiModel;
+
 class MainWindow : public QMainWindow, private Ui_MainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = 0);
+    MainWindow(IGuiModel& model, QWidget *parent = 0);
 
 protected:
     void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
@@ -46,4 +48,6 @@ private:
     QMenu *helpMenu;
     QToolBar *fileToolBar;
     QToolBar *viewToolBar;
+
+    IGuiModel &m_guiModel;
 };

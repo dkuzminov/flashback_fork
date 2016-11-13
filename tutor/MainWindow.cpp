@@ -2,13 +2,15 @@
 #include <QtWidgets>
 
 #include "MainWindow.h"
+#include "GuiModel.h"
 #include "Settings.h"
 #include "Log.h"
 
 using namespace std;
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+MainWindow::MainWindow(IGuiModel &model, QWidget *parent)
+    : QMainWindow(parent),
+      m_guiModel(model)
 {
     LOG(Note, "Enter MainWindow::MainWindow(...)");
     setupUi(this);
@@ -16,6 +18,8 @@ MainWindow::MainWindow(QWidget *parent)
     createActions();
     createMenus();
     createToolBars();
+
+    m_guiModel.Start();
 }
 
 void MainWindow::createActions()
