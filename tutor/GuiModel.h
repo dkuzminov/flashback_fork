@@ -17,6 +17,12 @@ public:
 private:
     GuiModel();
     void Start();
+    void SelectStep(size_t i);
+
+    // Temporary hardcoded 3:
+    size_t GetCount() { return 3; }
+
+    size_t m_selection;
 
 private slots:
 };

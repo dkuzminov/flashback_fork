@@ -9,6 +9,7 @@ class QMenu;
 QT_END_NAMESPACE
 
 struct IGuiModel;
+class TabWidget;
 
 class MainWindow : public QMainWindow, private Ui_MainWindow
 {
@@ -21,6 +22,8 @@ protected:
     void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
+    void on_tabClicked(size_t i);
+    void on_selectionChanged(size_t i, size_t old);
     void on_okButton_clicked();
     void on_postponeButton_clicked();
     void on_cancelButton_clicked();
@@ -50,4 +53,5 @@ private:
     QToolBar *viewToolBar;
 
     IGuiModel &m_guiModel;
+    std::vector<std::pair<TabWidget*, void*/*ReadPageWidget**/>> m_stepWidgets;
 };

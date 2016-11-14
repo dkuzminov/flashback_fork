@@ -3,7 +3,9 @@
 
 #include "MainWindow.h"
 #include "GuiModel.h"
+#include "TabWidget.h"
 #include "Settings.h"
+#include "GuiPalette.h"
 #include "Log.h"
 
 using namespace std;
@@ -18,6 +20,8 @@ MainWindow::MainWindow(IGuiModel &model, QWidget *parent)
     createActions();
     createMenus();
     createToolBars();
+
+    connect(&GuiModel::Get(), SIGNAL(selectionChanged(size_t, size_t)), this, SLOT(on_selectionChanged(size_t, size_t)));
 
     m_guiModel.Start();
 }
@@ -119,6 +123,21 @@ void MainWindow::closeEvent(QCloseEvent *event)
     } else {
         event->ignore();
     }
+}
+
+void MainWindow::on_tabClicked(size_t i)
+{
+    m_guiModel.SelectStep(i);
+}
+
+void MainWindow::on_selectionChanged(size_t i, size_t old)
+{
+    LOG(Note, "Slot MainWindow::on_selectionChanged(" + QString::number(i) + ", " + QString::number(old) + ") is being called");
+    stackedWidget->setCurrentIndex(i);
+    if (old != -1) {
+        m_stepWidgets[old].first->setHighlighted(false);
+    }
+    m_stepWidgets[i].first->setHighlighted(true);
 }
 
 void MainWindow::on_okButton_clicked()
