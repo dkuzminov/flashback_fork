@@ -24,6 +24,7 @@ MainWindow::MainWindow(IGuiModel &model, QWidget *parent)
     connect(&GuiModel::Get(), SIGNAL(selectionChanged(size_t, size_t)), this, SLOT(on_selectionChanged(size_t, size_t)));
 
     m_guiModel.Start();
+    on_lessonReady();
 }
 
 void MainWindow::createActions()
@@ -122,6 +123,37 @@ void MainWindow::closeEvent(QCloseEvent *event)
         event->accept();
     } else {
         event->ignore();
+    }
+}
+
+void MainWindow::on_lessonReady()
+{
+    LOG(Note, "Slot MainWindow::on_lessonReady() is being called");
+    bool applyStylesImmediately = BasicSettings::Get().IsApplyStylesImmediately();
+
+    auto &lesson = m_guiModel.GetLesson();
+    size_t n = lesson.GetStepCount();
+    LOG(Note, "There are " + QString::number(n) + " steps in the model");
+    bool isLight = true;
+    for (size_t i = 0; i < n; ++i) {
+        QString task = "__Task__";
+        QString name = "__Name__";
+        TabWidget *tabWidget = new TabWidget("", task, name, isLight, NULL);
+        verticalLayout->addWidget(tabWidget);
+        connect(tabWidget, &TabWidget::clicked, [=]() {
+            this->on_tabClicked(i);
+        });
+        m_stepWidgets.push_back(make_pair(tabWidget, (void*)NULL/*readPageWidget*/));
+        isLight = !isLight;
+    }
+
+    QPalette palette = GuiPalette::Get().GetPalette();
+    setPalette(palette);
+    palette.setColor(backgroundRole(), palette.base().color());
+    widget->setPalette(palette);
+
+    if (n) {
+        on_tabClicked(0);
     }
 }
 

@@ -22,6 +22,7 @@ protected:
     void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
+    void on_lessonReady();
     void on_tabClicked(size_t i);
     void on_selectionChanged(size_t i, size_t old);
     void on_okButton_clicked();

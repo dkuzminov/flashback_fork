@@ -6,8 +6,9 @@ QT_BEGIN_NAMESPACE
 class QWebView;
 QT_END_NAMESPACE
 
+class ICoach;
 
-class GuiModel : public IGuiModel
+class GuiModel : public IGuiModel, private IGuiModel::ILesson
 {
     Q_OBJECT
 
@@ -17,11 +18,13 @@ public:
 private:
     GuiModel();
     void Start();
+    ILesson& GetLesson() { return *this; }
     void SelectStep(size_t i);
 
     // Temporary hardcoded 3:
-    size_t GetCount() { return 3; }
+    size_t GetStepCount() { return 3; }
 
+    ICoach *m_coach;
     size_t m_selection;
 
 private slots:

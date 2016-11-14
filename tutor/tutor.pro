@@ -5,17 +5,20 @@ HEADERS =   MainWindow.h \
     Settings.h \
     GuiModel.h \
     interface/IGuiModel.h \
-    CoachBoard/DemoCoach.h \
     TabWidget.h \
-    GuiPalette.h
+    GuiPalette.h \
+    interface/ICoach.h \
+    CoachBoard.h \
+    CoachBoard/DemoCoach.h
 SOURCES =   main.cpp \
     MainWindow.cpp \
     Log.cpp \
     Settings.cpp \
     GuiModel.cpp \
-    CoachBoard/DemoCoach.cpp \
     TabWidget.cpp \
-    GuiPalette.cpp
+    GuiPalette.cpp \
+    CoachBoard.cpp \
+    CoachBoard/DemoCoach.cpp
 
 FORMS += \
     MainWindow.ui \
