@@ -10,6 +10,7 @@ QT_END_NAMESPACE
 
 struct IGuiModel;
 class TabWidget;
+class HtmlPageWidget;
 
 class MainWindow : public QMainWindow, private Ui_MainWindow
 {
@@ -54,5 +55,5 @@ private:
     QToolBar *viewToolBar;
 
     IGuiModel &m_guiModel;
-    std::vector<std::pair<TabWidget*, void*/*ReadPageWidget**/>> m_stepWidgets;
+    std::vector<std::pair<TabWidget*, HtmlPageWidget*>> m_stepWidgets;
 };

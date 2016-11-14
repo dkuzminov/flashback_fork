@@ -4,6 +4,7 @@
 #include "MainWindow.h"
 #include "GuiModel.h"
 #include "TabWidget.h"
+#include "HtmlPageWidget.h"
 #include "Settings.h"
 #include "GuiPalette.h"
 #include "Log.h"
@@ -139,11 +140,13 @@ void MainWindow::on_lessonReady()
         QString task = "__Task__";
         QString name = "__Name__";
         TabWidget *tabWidget = new TabWidget("", task, name, isLight, NULL);
+        HtmlPageWidget *htmlPageWidget = new HtmlPageWidget(NULL);
         verticalLayout->addWidget(tabWidget);
+        stackedWidget->addWidget(htmlPageWidget);
         connect(tabWidget, &TabWidget::clicked, [=]() {
             this->on_tabClicked(i);
         });
-        m_stepWidgets.push_back(make_pair(tabWidget, (void*)NULL/*readPageWidget*/));
+        m_stepWidgets.push_back(make_pair(tabWidget, htmlPageWidget));
         isLight = !isLight;
     }
 

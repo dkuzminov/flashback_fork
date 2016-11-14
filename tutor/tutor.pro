@@ -9,7 +9,8 @@ HEADERS =   MainWindow.h \
     GuiPalette.h \
     interface/ICoach.h \
     CoachBoard.h \
-    CoachBoard/DemoCoach.h
+    CoachBoard/DemoCoach.h \
+    HtmlPageWidget.h
 SOURCES =   main.cpp \
     MainWindow.cpp \
     Log.cpp \
@@ -18,12 +19,14 @@ SOURCES =   main.cpp \
     TabWidget.cpp \
     GuiPalette.cpp \
     CoachBoard.cpp \
-    CoachBoard/DemoCoach.cpp
+    CoachBoard/DemoCoach.cpp \
+    HtmlPageWidget.cpp
 
 FORMS += \
     MainWindow.ui \
     TabWidget.ui \
-    GuiPalette.ui
+    GuiPalette.ui \
+    HtmlPageWidget.ui
 
 RESOURCES += \
     HtmlTemplates.qrc
