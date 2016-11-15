@@ -137,8 +137,9 @@ void MainWindow::on_lessonReady()
     LOG(Note, "There are " + QString::number(n) + " steps in the model");
     bool isLight = true;
     for (size_t i = 0; i < n; ++i) {
-        QString task = "__Task__";
-        QString name = "__Name__";
+        IGuiModel::IStep &step = lesson.GetStep(i);
+        QString task = step.GetTask();
+        QString name = step.GetName();
         TabWidget *tabWidget = new TabWidget("", task, name, isLight, NULL);
         HtmlPageWidget *htmlPageWidget = new HtmlPageWidget(NULL);
         verticalLayout->addWidget(tabWidget);

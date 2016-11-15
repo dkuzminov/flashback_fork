@@ -27,6 +27,9 @@ void GuiModel::Start()
         m_coach = board.SelectDemo();
     }}
     m_coach->PrepareLesson();
+    for (int i = 0; i < m_coach->GetCount(); ++i) {
+        m_steps.push_back(Step(m_coach->GetStep(i)));
+    }
 }
 
 void GuiModel::SelectStep(size_t i)
