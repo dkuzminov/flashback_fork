@@ -4,9 +4,9 @@
 
 #include "HtmlPageWidget.h"
 
-HtmlPageWidget::HtmlPageWidget(/*const QString &id, *//*IGuiModel::IStep &step, */QWidget *parent)
+HtmlPageWidget::HtmlPageWidget(IGuiModel::IStep &step, QWidget *parent)
     : QWidget(parent)
 {
     setupUi(this);
-    webView->setHtml("<html><head></head><body>Stub</body></html>");
+    step.MasterWebControl(*webView);
 }

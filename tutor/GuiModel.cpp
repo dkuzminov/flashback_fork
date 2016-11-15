@@ -1,5 +1,7 @@
 #include "GuiModel.h"
 #include "CoachBoard.h"
+#include <QtWebKit>
+#include <QtWebKitWidgets>
 
 #include "Log.h"
 
@@ -38,4 +40,10 @@ void GuiModel::SelectStep(size_t i)
         emit selectionChanged(i, m_selection);
         m_selection = i;
     }
+}
+
+void GuiModel::Step::MasterWebControl(QWebView &webView)
+{
+    ICoach::IPageInfo &pageInfo = m_coachStep.GetPageInfo();
+    webView.setHtml(pageInfo.GetTemplate());
 }

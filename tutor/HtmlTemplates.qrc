@@ -1,2 +1,5 @@
 <RCC>
+    <qresource prefix="/html/templates/demo">
+        <file alias="Welcome">../resources/html/demo/Welcome.html</file>
+    </qresource>
 </RCC>

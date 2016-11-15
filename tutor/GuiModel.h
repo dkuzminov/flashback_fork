@@ -20,7 +20,7 @@ private:
     {
         QString GetTask() { return m_coachStep.GetTaskType(); }
         QString GetName() { return m_coachStep.GetName(); }
-        void MasterWebControl(QWebView &webView) { m_coachStep.GetPageMaster().MasterWebControl(webView); }
+        void MasterWebControl(QWebView &webView);
     public:
         Step(ICoach::IStep &coachStep) : m_coachStep(coachStep) {}
     private:

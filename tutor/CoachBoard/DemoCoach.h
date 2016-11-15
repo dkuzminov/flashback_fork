@@ -9,10 +9,14 @@ public:
     virtual ~Coach() {}
 };
 
-class BasePageMaster : public IPageMaster
+class PageInfo : public ICoach::IPageInfo
 {
 public:
-    virtual ~BasePageMaster() {}
+    PageInfo(const QString &templ) : m_template(templ) { }
+private:
+    const QString& GetTemplate() { return m_template; }
+
+    QString m_template;
 };
 
 class DemoCoach : public Coach
@@ -22,22 +26,22 @@ public:
 
 private:
     struct Step : public IStep {
-        Step(QString task, QString name, BasePageMaster *pageMaster)
-            : m_task(task), m_name(name), m_pageMaster(pageMaster) {}
+        Step(const QString &task, const QString &name, const QString &templ)
+            : m_task(task), m_name(name), m_pageInfo(new PageInfo(templ)) {}
         virtual QString GetTaskType() { return m_task; }
         virtual QString GetName() { return m_name; }
-        virtual IPageMaster& GetPageMaster() { return *m_pageMaster.get(); }
+        virtual IPageInfo& GetPageInfo() { return *m_pageInfo.get(); }
     private:
         QString m_task;
         QString m_name;
-        std::shared_ptr<BasePageMaster> m_pageMaster;
+        std::shared_ptr<PageInfo> m_pageInfo;
     };
 
     void PrepareLesson();
     size_t GetCount() { return m_steps.size(); }
     IStep& GetStep(size_t i) { return m_steps[i]; }
 
-    void x_AddStep(const QString &type, const QString &topic, BasePageMaster *pageMaster);
+    void x_AddStep(const QString &type, const QString &topic, const QString &resourceName);
 
     std::vector<Step> m_steps;
 };

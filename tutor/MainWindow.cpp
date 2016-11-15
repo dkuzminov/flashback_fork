@@ -141,7 +141,7 @@ void MainWindow::on_lessonReady()
         QString task = step.GetTask();
         QString name = step.GetName();
         TabWidget *tabWidget = new TabWidget("", task, name, isLight, NULL);
-        HtmlPageWidget *htmlPageWidget = new HtmlPageWidget(NULL);
+        HtmlPageWidget *htmlPageWidget = new HtmlPageWidget(step, NULL);
         verticalLayout->addWidget(tabWidget);
         stackedWidget->addWidget(htmlPageWidget);
         connect(tabWidget, &TabWidget::clicked, [=]() {

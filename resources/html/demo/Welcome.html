@@ -1,0 +1,76 @@
+﻿<html>
+<head>
+<style>
+  #step1 { display: none }
+  #step2 { display: none }
+  #step3 { display: none }
+  #step4 { display: none }
+  #step5 { display: none }
+  #step6 { display: none }
+</style>
+<script>
+  function draw1() {
+    var c = document.getElementById("canvas");
+    var ctx = c.getContext("2d");
+    ctx.rect(20, 20, 150, 100);
+    ctx.strokeStyle = 'green';
+    ctx.fillStyle = 'blue';
+    ctx.fill();
+    ctx.stroke();
+    var p = document.getElementById("step1");
+    p.style.display = 'block';
+  }
+
+  function show2() {
+    var p = document.getElementById("step1");
+    p.style.display = 'none';
+    p = document.getElementById("step2");
+    p.style.display = 'block';
+  }
+
+  function show3() {
+    var p = document.getElementById("step3");
+    p.style.display = 'block';
+    var sheet = document.styleSheets[0];
+    sheet.addRule('spot', 'background-color: #f0f090; border: 1px solid; border-radius: 3px; box-shadow: 2px 2px 3px;');
+  }
+
+  function draw4() {
+    var c = document.getElementById("canvas");
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.fillStyle = 'yellow';
+    ctx.strokeStyle = 'black';
+    ctx.fillRect(50, 50, 40, 25);
+    ctx.stroke();
+    var p = document.getElementById("step1");
+    p.style.display = 'block';
+  }
+
+  var currStep = 1;
+  function next() {
+    switch(currStep++) {
+    case 1: draw1(); break;
+    case 2: show2(); break;
+    case 3: show3(); break;
+    case 4: draw4(); break;
+    }
+  }
+</script>
+</head>
+<body>
+  <h2>Welcome to Flashback Tutor</h2>
+  <p>This is the first time you launch Flashback Tutor, so let me explain how it works.</p>
+  <canvas id="canvas" width="300" height="150" style="">
+  Your browser does not support the HTML5 canvas tag.</canvas>
+  <p id='step1'>Lets imagine you are studying a language, say Spanish.
+  Probably initially you know nothing in this language,
+  so your knowledge is shown as a blue solid rectangle.</p>
+  <p id='step2'>When you study a textbook, read fiction, listen music or watch movies in Spanish,
+  you have an opportunity to find new words, gramma rules, etc.
+  For example, here is a Spanish proverb: <q>A <spot>más</spot> <spot>vivir</spot>, <spot>más</spot> <spot>saber</spot>.</q></p>
+  <p id='step3'>There are 3 words that you may find uncommon.</p>
+  <p></p>
+  <a onclick='next()'>next</a>
+</body>
+</html>
