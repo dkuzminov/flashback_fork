@@ -83,7 +83,7 @@ void MainWindow::createActions()
 
 void MainWindow::createMenus()
 {
-    bool showMenu = BasicSettings::Get().IsShowMenu();
+    bool showMenu = BasicSettings::Get().NeedShowMenu();
     if (showMenu) {
         fileMenu = menuBar()->addMenu(tr("&File"));
         fileMenu->addAction(connectDatabaseAct);
@@ -105,7 +105,7 @@ void MainWindow::createMenus()
 
 void MainWindow::createToolBars()
 {
-    bool showToolbar = BasicSettings::Get().IsShowToolbar();
+    bool showToolbar = BasicSettings::Get().NeedShowToolbar();
     if (showToolbar) {
         fileToolBar = addToolBar(tr("File"));
         fileToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -130,7 +130,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::on_lessonReady()
 {
     LOG(Note, "Slot MainWindow::on_lessonReady() is being called");
-    bool applyStylesImmediately = BasicSettings::Get().IsApplyStylesImmediately();
+    bool applyStylesImmediately = BasicSettings::Get().NeedApplyStylesImmediately();
 
     auto &lesson = m_guiModel.GetLesson();
     size_t n = lesson.GetStepCount();

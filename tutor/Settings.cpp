@@ -8,9 +8,11 @@ BasicSettings& BasicSettings::Get()
 
 BasicSettings::BasicSettings()
     : m_isDemoMode(HardcodedSettings::IsDemoMode()),
-      m_isShowMenu(HardcodedSettings::IsShowMenu()),
-      m_isShowToolbar(HardcodedSettings::IsShowToolbar()),
-      m_isApplyStylesImmediately(HardcodedSettings::IsApplyStylesImmediately()),
-      m_colorScheme(HardcodedSettings::GetColorScheme())
+      m_useMockRepository(HardcodedSettings::UseMockRepository()),
+      m_needShowMenu(HardcodedSettings::NeedShowMenu()),
+      m_needShowToolbar(HardcodedSettings::NeedShowToolbar()),
+      m_needApplyStylesImmediately(HardcodedSettings::NeedApplyStylesImmediately()),
+      m_colorScheme(HardcodedSettings::GetColorScheme()),
+      m_databasePath(HardcodedSettings::GetDatabasePath())
 {
 }
