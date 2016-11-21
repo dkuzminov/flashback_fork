@@ -16,6 +16,10 @@ GuiModel::GuiModel()
     : m_selection(-1)
 {
     LOG(Note, "Enter GuiModel::GuiModel()");
+    QFile file(":/css/general");
+    file.open(QFile::ReadOnly | QFile::Text);
+    QTextStream in(&file);
+    m_style = in.readAll();
 }
 
 void GuiModel::Start()
@@ -49,7 +53,7 @@ void GuiModel::Start()
 
     m_coach->PrepareLesson();
     for (int i = 0; i < m_coach->GetCount(); ++i) {
-        m_steps.push_back(Step(m_coach->GetStep(i)));
+        m_steps.push_back(Step(m_coach->GetStep(i), m_style));
     }
 }
 
@@ -64,5 +68,13 @@ void GuiModel::SelectStep(size_t i)
 void GuiModel::Step::MasterWebControl(QWebView &webView)
 {
     ICoach::IPageInfo &pageInfo = m_coachStep.GetPageInfo();
-    webView.setHtml(pageInfo.GetTemplate());
+    QString bodyTemplate = pageInfo.GetTemplate();
+    if (bodyTemplate.indexOf("<html>", Qt::CaseInsensitive) != -1) {
+        LOG(Warning, "The body template has <html> tag");
+    }
+    QString pageTemplate = "<html><head><style id='general'>%style%</style></head><body>%body%</body></html>";
+    if (BasicSettings::Get().NeedApplyStylesImmediately()) {
+        pageTemplate.replace("%style%", m_style);
+    }
+    webView.setHtml(pageTemplate.replace("%body%", pageInfo.GetTemplate()));
 }

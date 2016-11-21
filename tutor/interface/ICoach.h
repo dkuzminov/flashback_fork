@@ -10,6 +10,7 @@ public:
     struct IPageInfo
     {
         virtual const QString& GetTemplate() = 0;
+        virtual bool IsComplete() = 0;
         //virtual IFeatures GetFeatures() = 0;
     };
 

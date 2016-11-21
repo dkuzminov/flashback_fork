@@ -22,9 +22,12 @@ private:
         QString GetName() { return m_coachStep.GetName(); }
         void MasterWebControl(QWebView &webView);
     public:
-        Step(ICoach::IStep &coachStep) : m_coachStep(coachStep) {}
+        Step(ICoach::IStep &coachStep, const QString &style)
+            : m_coachStep(coachStep),
+              m_style(style) {}
     private:
         ICoach::IStep &m_coachStep;
+        const QString &m_style;
     };
 
     GuiModel();
@@ -38,6 +41,7 @@ private:
     ICoach *m_coach;
     size_t m_selection;
     std::vector<Step> m_steps;
+    QString m_style;
 
 private slots:
 };

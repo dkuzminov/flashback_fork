@@ -12,7 +12,7 @@ public:
 private:
     struct Step : public IStep {
         Step(const QString &task, const QString &name, const QString &templ)
-            : m_task(task), m_name(name), m_pageInfo(new PageInfo(templ)) {}
+            : m_task(task), m_name(name), m_pageInfo(new PageInfo(templ, false)) {}
         virtual QString GetTaskType() { return m_task; }
         virtual QString GetName() { return m_name; }
         virtual IPageInfo& GetPageInfo() { return *m_pageInfo.get(); }

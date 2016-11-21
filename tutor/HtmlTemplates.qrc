@@ -11,4 +11,7 @@
         <file alias="SelectMeaningTest">../resources/html/templates/tests/SelectMeaningTest.html</file>
         <file alias="NounMarkersTest">../resources/html/templates/tests/NounMarkersTest.html</file>
     </qresource>
+    <qresource prefix="/css">
+        <file alias="general">../resources/css/general.css</file>
+    </qresource>
 </RCC>
