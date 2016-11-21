@@ -11,14 +11,19 @@ public:
 
 private:
     MockRepository();
+
+    // IUser:
     IUser* GetUser() { return this; }
     QString GetName() { return "Mock User"; }
-    IProfile* GetProfile() { return this; }
+    IProfile& GetProfile() { return *this; }
+
+    // IProfile:
     QString GetProfileName() { return "Mock Profile"; }
-    QString GetLanguage() { return "Mock Language"; }
-    QString GetCoach() { return "Standard"; }
+    IVariable* GetVariable(QString name);
+    ILanguage& GetLanguage() { throw "Not implemented"; }
+    QString GetCoachType() { return "Naive"; }
     IStatistics* GetStatistics() { return NULL; }
-    IBookmarks* GetBookmarks() { return NULL; }
-    ILibrary* GetPersonalLibrary() { return NULL; }
+    IBookmark* GetBookmark(QString id);
+    ILibrary& GetPersonalLibrary() { throw "Not implemented"; }
 };
 

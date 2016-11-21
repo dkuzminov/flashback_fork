@@ -2,4 +2,13 @@
     <qresource prefix="/html/templates/demo">
         <file alias="Welcome">../resources/html/demo/Welcome.html</file>
     </qresource>
+    <qresource prefix="/html/templates/demo/mock_repository">
+        <file alias="TextbookPage1">../resources/html/demo/mock_repository/TextbookPage1.html</file>
+        <file alias="FictionPage1">../resources/html/demo/mock_repository/FictionPage1.html</file>
+    </qresource>
+    <qresource prefix="/html/templates/tests">
+        <file alias="TypeMeaningTest">../resources/html/templates/tests/TypeMeaningTest.html</file>
+        <file alias="SelectMeaningTest">../resources/html/templates/tests/SelectMeaningTest.html</file>
+        <file alias="NounMarkersTest">../resources/html/templates/tests/NounMarkersTest.html</file>
+    </qresource>
 </RCC>

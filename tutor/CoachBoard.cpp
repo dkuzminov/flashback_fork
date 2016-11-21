@@ -1,5 +1,7 @@
 #include "CoachBoard.h"
+#include "CoachBoard/BaseCoach.h"
 #include "CoachBoard/DemoCoach.h"
+#include "CoachBoard/NaiveCoach.h"
 #include "Log.h"
 
 
@@ -14,15 +16,13 @@ CoachBoard::CoachBoard()
 {
 }
 
-ICoach* CoachBoard::Select(QString type/*, database*/)
+ICoach* CoachBoard::Select(QString type,
+                           IRepository::IProfile &profile)
 {
-    /*if (type == "demo") {
-        m_coach = new DemoCoach();
-    }*/
-    /*else {
-        m_coach = new TestAgent();
-    }*/
-    return NULL;
+    if (type == "Naive") {
+        m_coach = new NaiveCoach(profile);
+    }
+    return m_coach;
 }
 
 ICoach* CoachBoard::SelectDemo()

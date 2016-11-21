@@ -1,12 +1,13 @@
 #pragma once
 
 #include "CoachBoard/BaseCoach.h"
+#include "interface/IRepository.h"
 #include <memory>
 
-class DemoCoach : public BaseCoach
+class NaiveCoach : public BaseCoach
 {
 public:
-    DemoCoach();
+    NaiveCoach(IRepository::IProfile &profile);
 
 private:
     struct Step : public IStep {
@@ -15,7 +16,7 @@ private:
         virtual QString GetTaskType() { return m_task; }
         virtual QString GetName() { return m_name; }
         virtual IPageInfo& GetPageInfo() { return *m_pageInfo.get(); }
-        //virtual bool IsReady() { return true; }
+
     private:
         QString m_task;
         QString m_name;
@@ -26,7 +27,8 @@ private:
     size_t GetCount() { return m_steps.size(); }
     IStep& GetStep(size_t i) { return m_steps[i]; }
 
-    void x_AddStep(const QString &type, const QString &topic, const QString &resourceName);
+    void x_AddStep(const QString &type, const QString &topic, const QString &html);
 
+    IRepository::IProfile &m_profile;
     std::vector<Step> m_steps;
 };

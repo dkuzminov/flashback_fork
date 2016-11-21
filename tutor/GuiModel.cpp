@@ -20,42 +20,33 @@ GuiModel::GuiModel()
 
 void GuiModel::Start()
 {
-    // First of all, retrieve the coach type from the database
-    Database &database = Database::Get();
-    QString databasePath = BasicSettings::Get().GetDatabasePath();
-    if (database.Connect(databasePath)) {
-        IRepository& repo = database.GetRepository();
-        IRepository::IUser* user = repo.GetUser();
-        if (user) {
-            LOG(Note, "User: " + user->GetName());
-            IRepository::IProfile* profile = user->GetProfile();
-            if (profile) {
-                LOG(Note, "Profile: " + profile->GetProfileName());
-                QString coachType = profile->GetCoach();
-                LOG(Note, "Coach for this profile: " + coachType);
+    if (!BasicSettings::Get().IsDemoMode()) {
+        Database &database = Database::Get();
+        QString databasePath = BasicSettings::Get().GetDatabasePath();
+        if (database.Connect(databasePath)) {
+            IRepository& repo = database.GetRepository();
+            IRepository::IUser* user = repo.GetUser();
+            if (user) {
+                LOG(Note, "GuiModel got user from repository: " + user->GetName());
+                IRepository::IProfile& profile = user->GetProfile();
+                QString coachType = profile.GetCoachType();
+                LOG(Note, "User profile requires a coach: " + coachType);
                 CoachBoard &board = CoachBoard::Get();
-                board.Select(coachType/*, profile*/);
+                m_coach = board.Select(coachType, profile);
             }
             else {
-                LOG(Note, "No profile exists for this user");
-                // ToDo: IDatabase::IProfile* profile = user->CreateProfile();
+                LOG(Note, "No current user selected in repository");
+                // Do something to manage users
             }
         }
-        else {
-            LOG(Note, "No user selected in repository");
-            // Do something to manage users
-        }
+    }
 
-        // retrieve coach
-        // for now the coach type is hardcoded
-        CoachBoard &board = CoachBoard::Get();
-        //board.Select("type", profile);
-        m_coach = board.SelectDemo();
-    }
-    else {
+    // If nothing else works, use stub:
+    if (m_coach == NULL) {
         CoachBoard &board = CoachBoard::Get();
         m_coach = board.SelectDemo();
     }
+
     m_coach->PrepareLesson();
     for (int i = 0; i < m_coach->GetCount(); ++i) {
         m_steps.push_back(Step(m_coach->GetStep(i)));

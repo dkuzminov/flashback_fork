@@ -2,19 +2,21 @@
 
 #include <QWidget>
 #include "interface/ICoach.h"
+#include "interface/IRepository.h"
 
-class Coach;
+class BaseCoach;
 
 class CoachBoard
 {
 public:
     static CoachBoard& Get();
-    ICoach* Select(QString couchType/*, database*/);
+    ICoach* Select(QString couchType,
+                   IRepository::IProfile &profile);
     ICoach* SelectDemo();
     inline ICoach& GetCoach();
 
 private:
     CoachBoard();
 
-    Coach *m_coach;
+    BaseCoach *m_coach;
 };

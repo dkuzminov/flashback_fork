@@ -4,13 +4,15 @@ HEADERS =   MainWindow.h \
     interface/ICoach.h \
     interface/IGuiModel.h \
     interface/IRepository.h \
+    CoachBoard/BaseCoach.h \
+    CoachBoard/DemoCoach.h \
+    CoachBoard/NaiveCoach.h \
     Log.h \
     Settings.h \
     GuiModel.h \
     TabWidget.h \
     GuiPalette.h \
     CoachBoard.h \
-    CoachBoard/DemoCoach.h \
     HtmlPageWidget.h \
     Database.h \
     MockRepository.h
@@ -23,6 +25,7 @@ SOURCES =   main.cpp \
     GuiPalette.cpp \
     CoachBoard.cpp \
     CoachBoard/DemoCoach.cpp \
+    CoachBoard/NaiveCoach.cpp \
     HtmlPageWidget.cpp \
     Database.cpp \
     MockRepository.cpp

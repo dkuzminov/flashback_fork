@@ -1,7 +1,7 @@
 #include "CoachBoard/DemoCoach.h"
+#include "Log.h"
 #include <QFile>
 #include <QTextStream>
-#include "Log.h"
 
 DemoCoach::DemoCoach()
 {
@@ -11,10 +11,8 @@ DemoCoach::DemoCoach()
 void DemoCoach::PrepareLesson()
 {
     x_AddStep("Demo", "Welcome", ":/html/templates/demo/Welcome");
-    x_AddStep("Demo", "Welcome", ":/html/templates/demo/Welcome");
-    x_AddStep("Demo", "Welcome", ":/html/templates/demo/Welcome");
-    x_AddStep("Demo", "Welcome", ":/html/templates/demo/Welcome");
-    x_AddStep("Demo", "Welcome", ":/html/templates/demo/Welcome");
+    x_AddStep("Demo", "Textbook", ":/html/templates/demo/mock_repository/TextbookPage1");
+    x_AddStep("Demo", "Fiction", ":/html/templates/demo/mock_repository/FictionPage1");
 }
 
 void DemoCoach::x_AddStep(const QString &type, const QString &topic, const QString &resourceName)

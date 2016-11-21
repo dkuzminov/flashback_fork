@@ -26,7 +26,7 @@ IRepository& Database::GetRepository()
 class User : public IRepository::IUser
 {
     QString GetName() { return "Stub"; }
-    IRepository::IProfile* GetProfile() {return NULL;}
+    IRepository::IProfile& GetProfile() { throw "Not implemented yet"; }
 };
 
 IRepository::IUser* Database::GetUser() { return m_user.get(); }
