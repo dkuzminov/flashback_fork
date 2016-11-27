@@ -13,12 +13,17 @@ class Database : public QObject,
 
 public:
     static Database& Get();
-    bool Connect(const QString &filename);
+    bool Connect(const QString &path);
+    bool Reconstruct(const QString &path);
+    bool CreateUser(const QString &name);
     IRepository& GetRepository();
 
 private:
     Database();
     IUser* GetUser();
+    void x_RemoveDatabaseFiles();
+    void x_RemoveDirectory(const QString &dirName);
+    void x_ReconstructSampleLibrary();
     void x_ReadVariables();
     void x_selectUser(const QString &id);
 

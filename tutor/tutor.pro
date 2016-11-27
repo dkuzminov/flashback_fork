@@ -37,5 +37,6 @@ FORMS += \
     HtmlPageWidget.ui
 
 RESOURCES += \
-    HtmlTemplates.qrc
+    HtmlTemplates.qrc \
+    SqlQueries.qrc
 

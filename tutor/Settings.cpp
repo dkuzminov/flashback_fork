@@ -12,6 +12,7 @@ BasicSettings::BasicSettings()
       m_needShowMenu(HardcodedSettings::NeedShowMenu()),
       m_needShowToolbar(HardcodedSettings::NeedShowToolbar()),
       m_needApplyStylesImmediately(HardcodedSettings::NeedApplyStylesImmediately()),
+      m_forceReconstructDatabase(HardcodedSettings::ForceReconstructDatabase()),
       m_colorScheme(HardcodedSettings::GetColorScheme()),
       m_databasePath(HardcodedSettings::GetDatabasePath())
 {

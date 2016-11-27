@@ -27,7 +27,15 @@ void GuiModel::Start()
     if (!BasicSettings::Get().IsDemoMode()) {
         Database &database = Database::Get();
         QString databasePath = BasicSettings::Get().GetDatabasePath();
-        if (database.Connect(databasePath)) {
+        bool databaseReady = false;
+        if (BasicSettings::Get().ForceReconstructDatabase()) {
+            databaseReady = database.Reconstruct(databasePath);
+            database.CreateUser("NewUser");
+        }
+        else {
+            databaseReady = database.Connect(databasePath);
+        }
+        if (databaseReady) {
             IRepository& repo = database.GetRepository();
             IRepository::IUser* user = repo.GetUser();
             if (user) {

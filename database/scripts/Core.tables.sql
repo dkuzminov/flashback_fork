@@ -1,5 +1,5 @@
 CREATE TABLE Variable (
-	name   STRING NOT NULL,
+	name   STRING KEY,
 	value  STRING
 );
 
