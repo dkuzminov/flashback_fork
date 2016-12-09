@@ -1,0 +1,151 @@
+<html>
+<head>
+<style>
+body {
+	font-family: 'Segoe UI', Tahoma, sans-serif;
+	font-size: 75%;
+	padding-top: 75px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal;
+}
+
+body header {
+	background-image: -webkit-linear-gradient(white,
+                                              white 40%,
+                                              rgba(255, 255, 255, 0.92));
+    /* <section>s in options currently amount to 638px total, broken up into
+     * 600px max-width + 18px -webkit-padding-start + 20px -webkit-margin-end
+     * so we mirror this value here so the headers match width and horizontal
+     * alignment when scrolling sideways.
+     * other-devices.css' .device width depends on this, please keep in sync. */
+	position: fixed;
+	top: 0;
+	-webkit-transform: none;
+}
+
+body header h1, body header h2 {
+	position: fixed;
+	top: 0;
+}
+body header h2 {
+	top: 7;
+	right: 5%;
+}
+
+
+.settings-row {
+	margin: 0.65em 0;
+}
+
+span.property-name {
+	display: inline-block;
+	min-width: 100px;
+}
+
+body section {
+	-webkit-padding-start: 18px;
+}
+
+body section > h3 {
+	-webkit-margin-start: -18px;
+}
+
+select {
+	min-width: 245px;
+}
+</style>
+</head>
+<body>
+  <header>
+    <h1>Settings</h1>
+    <h2 id="name-as-connected">User name</h2>
+  </header>
+
+  <section id="credentials">
+    <h3>Sign in</h3>
+	<div>
+	  <div id="user-name" class="settings-row">
+	    <label>
+	  	  <span id="userNameLabel" class="property-name">User name:</span>
+	  	  <input id="userName" type="text" size="36" placeholder="Please type your name here" onchange="tutor.onNameChanged(this.value)"/>
+	    </label>
+	  </div>
+	  <div hidden>
+	    <div id="user-login" class="settings-row">
+	      <label>
+	  	    <span id="user-login-label" class="property-name">Login:</span>
+	  	    <input id="userLogin" type="text" size="36"/>
+	      </label>
+	    </div>
+  	    <div id="user-password" class="settings-row">
+	      <label>
+	  	    <span id="user-password-label" class="property-name">Password:</span>
+	  	    <input id="userPassword" type="text" size="36"/>
+	      </label>
+	    </div>
+	  </div>
+    </div>
+  </section>
+
+  <section id="language">
+    <h3>Language</h3>
+    <div>
+      <div class="settings-row">
+        <label class="language-select-label">
+          <span class="property-name">Language:</span>
+          <select id="languageSelect" onchange="tutor.onLanguageChanged(this.value)">
+            <option value="" hidden></option>
+            <option value="Spanish">Spanish</option>
+          </select>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <section id="libraries" hidden>
+    <h3>Libraries</h3>
+    <div>
+      <div class="settings-row">
+      </div>
+    </div>
+  </section>
+
+  <section id="coach">
+    <h3>Coach settings</h3>
+    <div>
+      <div class="settings-row">
+        <label class="coach-select-label">
+          <span class="property-name">Coach type:</span>
+          <select id="coachType" onchange="tutor.onCoachChanged(this.value)">
+            <option value="" hidden></option>
+            <option value="Naive">Naive coach</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div id="naive-coach-settings" hidden>
+      <div class="settings-row">
+        <label class="naive-coach-select-label">
+          <span class="property-name">Textbook:</span>
+          <select id="textbookName">
+            <option value="" hidden></option>
+            <option value="Countdown">Countdown to Spanish</option>
+          </select>
+        </label>
+      </div>
+      <div class="settings-row">
+        <label class="naive-coach-select-label">
+          <span class="property-name">Fiction:</span>
+          <select id="defaultFontSize">
+            <option value="" hidden></option>
+            <option value="Coronel">El Coronel no tiene quien le escriba</option>
+          </select>
+        </label>
+      </div>
+    </div>
+  </section>
+  
+</body>
+</html>

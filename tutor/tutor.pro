@@ -7,6 +7,7 @@ HEADERS =   MainWindow.h \
     CoachBoard/BaseCoach.h \
     CoachBoard/DemoCoach.h \
     CoachBoard/NaiveCoach.h \
+    PageControllers/ConfigureUserPageController.h \
     Log.h \
     Settings.h \
     GuiModel.h \
@@ -26,6 +27,7 @@ SOURCES =   main.cpp \
     CoachBoard.cpp \
     CoachBoard/DemoCoach.cpp \
     CoachBoard/NaiveCoach.cpp \
+    PageControllers/ConfigureUserPageController.cpp \
     HtmlPageWidget.cpp \
     Database.cpp \
     MockRepository.cpp

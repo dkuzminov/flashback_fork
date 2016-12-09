@@ -8,5 +8,5 @@ HtmlPageWidget::HtmlPageWidget(IGuiModel::IStep &step, QWidget *parent)
     : QWidget(parent)
 {
     setupUi(this);
-    step.MasterWebControl(*webView);
+    step.GetPageController().MasterWebControl(*webView);
 }

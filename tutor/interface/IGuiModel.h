@@ -12,11 +12,16 @@ struct IGuiModel : public QObject
     Q_OBJECT
 
 public:
+    struct IPageController
+    {
+        virtual void MasterWebControl(QWebView &webView) = 0;
+    };
+
     struct IStep
     {
         virtual QString GetTask() = 0;
         virtual QString GetName() = 0;
-        virtual void MasterWebControl(QWebView &webView) = 0;
+        virtual IPageController& GetPageController() = 0;
     };
 
     struct ILesson
