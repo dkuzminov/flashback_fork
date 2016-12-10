@@ -1,5 +1,6 @@
 #include "GuiModel.h"
 #include "PageControllers/ConfigureUserPageController.h"
+#include "PageControllers/ReadOnlyPageController.h"
 #include "Database.h"
 #include "CoachBoard.h"
 #include "Settings.h"
@@ -53,6 +54,10 @@ void GuiModel::Start()
             }
         }
     }
+    else {
+        CoachBoard &board = CoachBoard::Get();
+        m_coach = board.SelectDemo();
+    }
 
     // If nothing else works, use stub:
     if (m_coach == NULL) {
@@ -63,15 +68,17 @@ void GuiModel::Start()
                                  "Select User",
                                  ConfigureUserPageController::Get())));
     }
-
     else {
-#if 0
-// Temporary removed to avoid compilation errors
         m_coach->PrepareLesson();
         for (int i = 0; i < m_coach->GetCount(); ++i) {
-            m_steps.push_back(Step(m_coach->GetStep(i), m_style));
+            m_steps.push_back(
+                    std::shared_ptr<Step>(
+                            new Step(m_coach->GetStep(i).GetTaskType(),
+                                     m_coach->GetStep(i).GetName(),
+                                     ReadOnlyPageController::Get(
+                                             m_coach->GetStep(i).GetPageInfo().GetTemplate(),
+                                             m_style))));
         }
-#endif
     }
 }
 
@@ -83,19 +90,3 @@ void GuiModel::SelectStep(size_t i)
     }
 }
 
-#if 0
-// Temporary removed. Will reuse.
-void GuiModel::Step::MasterWebControl(QWebView &webView)
-{
-    ICoach::IPageInfo &pageInfo = m_coachStep.GetPageInfo();
-    QString bodyTemplate = pageInfo.GetTemplate();
-    if (bodyTemplate.indexOf("<html>", Qt::CaseInsensitive) != -1) {
-        LOG(Warning, "The body template has <html> tag");
-    }
-    QString pageTemplate = "<html><head><style id='general'>%style%</style></head><body>%body%</body></html>";
-    if (BasicSettings::Get().NeedApplyStylesImmediately()) {
-        pageTemplate.replace("%style%", m_style);
-    }
-    webView.setHtml(pageTemplate.replace("%body%", bodyTemplate));
-}
-#endif
