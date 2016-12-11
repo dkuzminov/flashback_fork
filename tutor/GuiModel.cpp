@@ -1,7 +1,7 @@
 #include "GuiModel.h"
 #include "PageControllers/ConfigureUserPageController.h"
 #include "PageControllers/ReadOnlyPageController.h"
-#include "Database.h"
+#include "Repositories/SQLite/Database.h"
 #include "CoachBoard.h"
 #include "Settings.h"
 #include "Log.h"
