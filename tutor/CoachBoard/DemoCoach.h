@@ -1,8 +1,9 @@
 #pragma once
 
 #include "CoachBoard/BaseCoach.h"
-#include <memory>
 
+#if 0
+// Temporary remove DemoCoach
 class DemoCoach : public BaseCoach
 {
 public:
@@ -30,3 +31,4 @@ private:
 
     std::vector<Step> m_steps;
 };
+#endif

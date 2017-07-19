@@ -3,6 +3,7 @@
 #include <QFile>
 #include <QTextStream>
 
+#if 0
 NaiveCoach::NaiveCoach(IRepository::IProfile &profile)
     : m_profile(profile)
 {
@@ -47,3 +48,4 @@ void NaiveCoach::x_AddStep(const QString &type, const QString &topic, const QStr
 {
     m_steps.push_back(Step(type, topic, html));
 }
+#endif

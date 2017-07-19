@@ -66,3 +66,50 @@ IRepository::IBookmark* MockRepository::GetBookmark(QString id)
     }
     return NULL;
 }
+
+std::vector<std::pair<QString, QString>> MockRepository::GetNWordPairs(size_t num)
+{
+    static const std::vector<std::pair<QString, QString>> words = {
+        {"accusare",	"обвинять"},
+        {"agere",	"приводить в движение"},
+        {"amare",	"любить"},
+        {"aperire",	"открывать"},
+        {"appellare",	"звать"},
+        {"audire",	"слушать"},
+        {"bebere",	"пить"},
+        {"cedere",	"ступать"},
+        {"clamare",	"кричать"},
+        {"credere",	"верить"},
+        {"discere",	"учиться"},
+        {"debere",	"быть должным"},
+        {"delere",	"уничтожать"},
+        {"demolire",	"уничтожать"},
+        {"docere",	"учить"},
+        {"dolere",	"болеть"},
+        {"laborare", "работать"},
+        {"laudare",	"хвалить"},
+        {"legere",	"читать"},
+        {"nutrire",	"кормить"},
+        {"parare",	"готовить"},
+        {"placere",	"нравиться"},
+        {"rubescere",	"краснеть"},
+        {"rugire",	"реветь"},
+        {"salire",	"прыгать"},
+        {"sentire",	"чувствовать"},
+        {"scribere",	"писать"},
+        {"tacere",	"молчать"},
+        {"tenere",	"держать"},
+        {"timere",	"бояться"},
+        {"valere",	"здравствовать"},
+        {"vetare",	"запрещать"},
+        {"vivere",	"жить"},
+        {"vocare",	"вызывать"}};
+
+    std::vector<std::pair<QString, QString>> result;
+    for (size_t i = 0; i < num; ++i) {
+        size_t ind = rand() % words.size();
+        result.push_back(words[ind]);
+    }
+
+    return move(result);
+}

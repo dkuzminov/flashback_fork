@@ -2,15 +2,13 @@
 
 #include <QObject>
 
-struct ICoach : public QObject
+struct ICoach
 {
-    Q_OBJECT
-
-public:
-    struct IPageInfo
+    struct IPageContents
     {
         virtual const QString& GetTemplate() = 0;
-        virtual bool IsComplete() = 0;
+        virtual QObject* GetTOMObject() = 0;
+        //virtual bool IsComplete() = 0;
         //virtual IFeatures GetFeatures() = 0;
     };
 
@@ -18,7 +16,7 @@ public:
     {
         virtual QString GetTaskType() = 0;
         virtual QString GetName() = 0;
-        virtual IPageInfo& GetPageInfo() = 0;
+        virtual IPageContents& GetPageContents() = 0;
     };
 
     virtual void PrepareLesson() = 0;

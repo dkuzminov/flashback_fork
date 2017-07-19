@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QString>
+#include <vector>
 
 struct IRepository
 {
@@ -9,10 +10,16 @@ struct IRepository
         virtual QString GetValue() = 0;
     };
 
+    struct IDictionary
+    {
+        virtual std::vector<std::pair<QString, QString>> GetNWordPairs(size_t num) = 0;
+    };
+
     // ToDo rename to Thesaurus
     struct ILanguage
     {
         virtual QString GetLanguageName() = 0;
+        virtual IDictionary& GetDictionary() = 0;
         //virtual ILibrary& GetLibrary() = 0;
     };
 

@@ -52,7 +52,7 @@ private:
     QString GetProfileName() { return "Stub"; }
     IRepository::IVariable* GetVariable(QString name);
     IRepository::ILanguage& GetLanguage() { throw "Not implemented"; }
-    QString GetCoachType() { return "Naive"; }
+    QString GetCoachType() { return "Alexandra"; }
     IRepository::IStatistics* GetStatistics() { return NULL; }
     IRepository::IBookmark* GetBookmark(QString id);
     IRepository::ILibrary& GetPersonalLibrary() { throw "Not implemented"; }

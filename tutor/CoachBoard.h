@@ -3,6 +3,7 @@
 #include <QWidget>
 #include "interface/ICoach.h"
 #include "interface/IRepository.h"
+#include <memory>
 
 class BaseCoach;
 
@@ -18,5 +19,5 @@ public:
 private:
     CoachBoard();
 
-    BaseCoach *m_coach;
+    std::unique_ptr<BaseCoach> m_coach;
 };

@@ -3,6 +3,7 @@
 #include <QFile>
 #include <QTextStream>
 
+#if 0
 DemoCoach::DemoCoach()
 {
     LOG(Note, "Enter DemoCoach::DemoCoach()");
@@ -22,3 +23,4 @@ void DemoCoach::x_AddStep(const QString &type, const QString &topic, const QStri
     QTextStream in(&file);
     m_steps.push_back(Step(type, topic, in.readAll(), isComplete));
 }
+#endif

@@ -4,7 +4,9 @@
 
 class MockRepository : public IRepository,
                        private IRepository::IUser,
-                       private IRepository::IProfile
+                       private IRepository::IProfile,
+                       private IRepository::ILanguage,
+                       private IRepository::IDictionary
 {
 public:
     static MockRepository& Get();
@@ -20,10 +22,17 @@ private:
     // IProfile:
     QString GetProfileName() { return "Mock Profile"; }
     IVariable* GetVariable(QString name);
-    ILanguage& GetLanguage() { throw "Not implemented"; }
-    QString GetCoachType() { return "Naive"; }
+    ILanguage& GetLanguage() { return *this; }
+    QString GetCoachType() { return "Alexandra"; }
     IStatistics* GetStatistics() { return NULL; }
     IBookmark* GetBookmark(QString id);
     ILibrary& GetPersonalLibrary() { throw "Not implemented"; }
+
+    // ILanguage:
+    QString GetLanguageName() { return "Latin"; }
+    IDictionary& GetDictionary() {return *this; }
+
+    // IDictionary:
+    std::vector<std::pair<QString, QString>> GetNWordPairs(size_t num);
 };
 

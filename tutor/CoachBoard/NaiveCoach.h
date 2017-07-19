@@ -2,8 +2,9 @@
 
 #include "CoachBoard/BaseCoach.h"
 #include "interface/IRepository.h"
-#include <memory>
 
+#if 0
+// Temporary remove NaiveCoach
 class NaiveCoach : public BaseCoach
 {
 public:
@@ -32,3 +33,4 @@ private:
     IRepository::IProfile &m_profile;
     std::vector<Step> m_steps;
 };
+#endif

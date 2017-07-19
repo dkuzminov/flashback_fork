@@ -1,6 +1,7 @@
 #include "GuiModel.h"
 #include "PageControllers/ConfigureUserPageController.h"
 #include "PageControllers/ReadOnlyPageController.h"
+#include "PageControllers/ExercisePageController.h"
 #include "Repositories/SQLite/Database.h"
 #include "CoachBoard.h"
 #include "Settings.h"
@@ -75,9 +76,11 @@ void GuiModel::Start()
                     std::shared_ptr<Step>(
                             new Step(m_coach->GetStep(i).GetTaskType(),
                                      m_coach->GetStep(i).GetName(),
-                                     ReadOnlyPageController::Get(
-                                             m_coach->GetStep(i).GetPageInfo().GetTemplate(),
-                                             m_style))));
+                                     ExercisePageController::Get(
+                                             m_coach->GetStep(i).GetPageContents().GetTemplate(),
+                                             m_style,
+                                             m_coach->GetStep(i).GetPageContents().GetTOMObject()
+                                             ))));
         }
     }
 }

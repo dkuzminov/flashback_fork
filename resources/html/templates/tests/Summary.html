@@ -1,0 +1,14 @@
+﻿<h3>The result of your test:</h3>
+<p><span id=correct></span> correct</p>
+<p><span id=mistakes></span> mistakes</p>
+<script>
+    tutor.changed.connect(udpate);
+    udpate();
+
+    function udpate() {
+        correct = tutor.getCorrectNumber();
+        mistakes = tutor.getMistakesNumber();
+        document.getElementById("correct").innerHTML = correct;
+        document.getElementById("mistakes").innerHTML = mistakes;
+    }
+</script>

@@ -1,3 +1,6 @@
 ﻿<h3>Find a translation for the word:</h3>
 <p id='word'>__word__</p>
-<input/>
+<input oninput="tutor.onchange(this.value)"/>
+<script>
+   document.getElementById("word").innerHTML = tutor.getWord();
+</script>
