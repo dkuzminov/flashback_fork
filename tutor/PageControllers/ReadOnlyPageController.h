@@ -3,7 +3,7 @@
 #include <QObject>
 #include <memory>
 
-class ReadOnlyPageController : public IGuiModel::IPageController
+class ReadOnlyPageController : public guimodel::IPageController
 {
     void MasterWebControl(QWebView &webView);
 

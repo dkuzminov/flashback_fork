@@ -1,7 +1,9 @@
 #include "User.h"
+#include "Repositories/SQLite/Database.h"
 #include "Log.h"
 
-User::User(QString name, QString path, QString libraryDbFilename, bool createNew)
+User::User(IDatabase& owner, QString name, QString path, QString libraryDbFilename, bool createNew)
+    : m_owner(owner)
 {
     // ToDo: Avoid passing library filename and path
     LOG(Note, "User::User('" + name + "', '" + path + "', '" + libraryDbFilename + "'" + createNew + ")");
@@ -30,6 +32,16 @@ User::User(QString name, QString path, QString libraryDbFilename, bool createNew
     }
     if (!query.exec("ATTACH DATABASE '" + libraryDbFilename + "' AS 'Library'")) {
         LOG(Error, "Failed to attach Library database");
+    }
+
+    IRepository::IVariable* var = GetVariable("Language");
+    if (var) {
+        m_language = owner.GetLanguage(var->GetValue());
+    }
+    else {
+        m_language = NULL;
+        LOG(Error, "No language specified in User database");
+        // ToDo: throw an exception
     }
 }
 
@@ -72,6 +84,11 @@ IRepository::IBookmark* User::GetBookmark(QString id)
         return &iter.value();
     }
     return NULL;
+}
+
+IRepository::ILanguage& User::GetLanguage()
+{
+    return *m_language;
 }
 
 QString User::Bookmark::GetHtml()

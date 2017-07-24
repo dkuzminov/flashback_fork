@@ -5,9 +5,16 @@
 #include <memory>
 
 class User;
+class Language;
+
+struct IDatabase
+{
+    virtual IRepository::ILanguage* GetLanguage(QString name) = 0;
+};
 
 class Database : public QObject,
-                 private IRepository
+                 private IRepository,
+                 private IDatabase
 {
     Q_OBJECT
 
@@ -21,6 +28,10 @@ public:
 private:
     Database();
     IUser* GetUser();
+
+    // IDatabase:
+    ILanguage* GetLanguage(QString name);
+
     void x_RemoveDatabaseFiles();
     void x_RemoveDirectory(const QString &dirName);
     void x_ReconstructSampleLibrary();
@@ -31,5 +42,6 @@ private:
     QSqlDatabase m_coreDatabase;
     QMap<QString, QString> m_variables;
     std::shared_ptr<User> m_user;
+    std::shared_ptr<Language> m_language;
 };
 

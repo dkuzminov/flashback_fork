@@ -6,6 +6,7 @@ HEADERS =   MainWindow.h \
     interface/IRepository.h \
     interface/IGuiPage.h \
     Repositories/SQLite/Database.h \
+    Repositories/SQLite/Language.h \
     Repositories/SQLite/User.h \
     Repositories/MockRepository.h \
     CoachBoard/AlexandraCoach.h \
@@ -34,6 +35,7 @@ SOURCES =   main.cpp \
     CoachBoard/DemoCoach.cpp \
     CoachBoard/NaiveCoach.cpp \
     Repositories/SQLite/Database.cpp \
+    Repositories/SQLite/Language.cpp \
     Repositories/SQLite/User.cpp \
     Repositories/MockRepository.cpp \
     PageControllers/ConfigureUserPageController.cpp \

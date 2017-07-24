@@ -11,7 +11,7 @@
 
 using namespace std;
 
-MainWindow::MainWindow(IGuiModel &model, QWidget *parent)
+MainWindow::MainWindow(guimodel::IGuiModel &model, QWidget *parent)
     : QMainWindow(parent),
       m_guiModel(model)
 {
@@ -22,7 +22,7 @@ MainWindow::MainWindow(IGuiModel &model, QWidget *parent)
     createMenus();
     createToolBars();
 
-    connect(&GuiModel::Get(), SIGNAL(selectionChanged(size_t, size_t)), this, SLOT(on_selectionChanged(size_t, size_t)));
+    connect(&(guimodel::IGuiModel&)GuiModel::Get(), SIGNAL(selectionChanged(size_t, size_t)), this, SLOT(on_selectionChanged(size_t, size_t)));
 
     m_guiModel.Start();
     on_lessonReady();
@@ -137,10 +137,13 @@ void MainWindow::on_lessonReady()
     LOG(Note, "There are " + QString::number(n) + " steps in the model");
     bool isLight = true;
     for (size_t i = 0; i < n; ++i) {
-        IGuiModel::IStep &step = lesson.GetStep(i);
+        guimodel::IStep &step = lesson.GetStep(i);
         QString task = step.GetTask();
         QString name = step.GetName();
-        TabWidget *tabWidget = new TabWidget("", task, name, isLight, NULL);
+        connect(&(guimodel::IStep&)step, &guimodel::IStep::changed, [=]() {
+            this->on_stepChanged(i);
+        });
+        TabWidget *tabWidget = new TabWidget("", task, name, isLight, this);
         HtmlPageWidget *htmlPageWidget = new HtmlPageWidget(step, NULL);
         verticalLayout->addWidget(tabWidget);
         stackedWidget->addWidget(htmlPageWidget);
@@ -159,6 +162,13 @@ void MainWindow::on_lessonReady()
     if (n) {
         on_tabClicked(0);
     }
+}
+
+void MainWindow::on_stepChanged(size_t i)
+{
+    auto &lesson = m_guiModel.GetLesson();
+    guimodel::IStep &step = lesson.GetStep(i);
+    m_stepWidgets[i].first->Update(step.GetTask(), step.GetName());
 }
 
 void MainWindow::on_tabClicked(size_t i)

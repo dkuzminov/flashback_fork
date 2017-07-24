@@ -1,4 +1,5 @@
 #include "Database.h"
+#include "Repositories/SQLite/Language.h"
 #include "Repositories/SQLite/User.h"
 #include "Repositories/MockRepository.h"
 #include "Settings.h"
@@ -43,6 +44,14 @@ bool Database::Connect(const QString &path)
     return true;
 }
 
+IRepository::ILanguage* Database::GetLanguage(QString name)
+{
+    if (!m_language) {
+        m_language.reset(new Language(name, m_path + "Languages/"));
+    }
+    return m_language.get();
+}
+
 bool Database::Reconstruct(const QString &path)
 {
     LOG(Note, "Database::Reconstruct(\"" + path + "\")");
@@ -83,7 +92,7 @@ bool Database::CreateUser(const QString &name)
     LOG(Note, "Database::CreateUser(\"" + name + "\")");
 
     // ToDo: check that user doesn't exist
-    m_user.reset(new User(name, m_path + "Users/", m_path + "Libraries/Sample.db", true));
+    m_user.reset(new User(*this, name, m_path + "Users/", m_path + "Libraries/Sample.db", true));
     QString id = name.toLower();
     QSqlQuery query(m_coreDatabase);
     query.prepare("INSERT INTO Variable (name, value) VALUES ('User', :id)");
@@ -170,5 +179,5 @@ void Database::x_selectUser(const QString &id)
     QString name = query.value(0).toString();
     QString filename = query.value(1).toString();
     LOG(Error, "Read user: name = " + name + ", filename = " + filename);
-    m_user.reset(new User(name, m_path + "Users/", m_path + "Libraries/Sample.db"));
+    m_user.reset(new User(*this, name, m_path + "Users/", m_path + "Libraries/Sample.db"));
 }

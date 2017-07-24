@@ -50,7 +50,7 @@ private:
                          private QuestionTOMObject
     {
         // ICoach::IStep:
-        QObject* GetTOMObject() { return this; }
+        QObject* GetTOMObject() { return static_cast<QuestionTOMObject*>(this); }
 
         // QuestionTOMObject:
         QString getWord() { return m_word; }
@@ -74,7 +74,7 @@ private:
                         private SummaryTOMObject
     {
         // ICoach::IStep:
-        QObject* GetTOMObject() { return this; }
+        QObject* GetTOMObject() { return static_cast<SummaryTOMObject*>(this); }
 
         // SummaryTOMObject:
         int getCorrectNumber() { return m_correct; }
@@ -88,11 +88,12 @@ private:
               m_mistakes(0)
         {}
 
-        void signalChanged(int correct, int mistakes)
+        void signalChanged(int correct, int mistakes, int total)
         {
             m_correct = correct;
             m_mistakes = mistakes;
-            changed();
+            Update("Test Results", "progress " + QString::number(correct + mistakes) + " out of " + QString::number(total));
+            emit changed();
         }
     private:
         IAlexandraCoach &m_owner;

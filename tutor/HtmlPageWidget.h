@@ -12,7 +12,7 @@ class HtmlPageWidget : public QWidget,  public Ui_HtmlPageWidget
 {
     Q_OBJECT
 public:
-    HtmlPageWidget(IGuiModel::IStep &step, QWidget *parent);
+    HtmlPageWidget(guimodel::IStep &step, QWidget *parent);
 
 private slots:
 

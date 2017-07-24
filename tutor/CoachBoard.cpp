@@ -16,8 +16,8 @@ CoachBoard::CoachBoard()
 {
 }
 
-ICoach* CoachBoard::Select(QString type,
-                           IRepository::IProfile &profile)
+coach::ICoach* CoachBoard::Select(QString type,
+                                  IRepository::IProfile &profile)
 {
     // Temporary remove any other coaches
     /*if (type == "Naive") {
@@ -30,14 +30,14 @@ ICoach* CoachBoard::Select(QString type,
     return new AlexandraCoach(profile);
 }
 
-ICoach* CoachBoard::SelectDemo()
+coach::ICoach* CoachBoard::SelectDemo()
 {
     // Temporary remove any other coaches
     /*m_coach = new DemoCoach();*/
     return m_coach.get();
 }
 
-ICoach& CoachBoard::GetCoach()
+coach::ICoach& CoachBoard::GetCoach()
 {
     return *m_coach.get();
 }

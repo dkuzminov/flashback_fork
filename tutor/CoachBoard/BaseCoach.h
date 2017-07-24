@@ -3,21 +3,21 @@
 #include "interface/ICoach.h"
 #include <memory>
 
-class BaseCoach : public ICoach
+class BaseCoach : public coach::ICoach
 {
     size_t GetCount() { return m_stepsPages.size(); }
-    ICoach::IStep& GetStep(size_t i) { return *m_stepsPages[i]; }
+    coach::IStep& GetStep(size_t i) { return *m_stepsPages[i]; }
 public:
     virtual ~BaseCoach() {}
 
 protected:
-    class StepPage : public ICoach::IStep,
-                     private ICoach::IPageContents
+    class StepPage : public coach::IStep,
+                     private coach::IPageContents
     {
         // ICoach::IStep:
         virtual QString GetTaskType() { return m_task; }
         virtual QString GetName() { return m_name; }
-        virtual IPageContents& GetPageContents() { return *this; }
+        virtual coach::IPageContents& GetPageContents() { return *this; }
 
         // ICoach::IPageContents:
         const QString& GetTemplate() { return m_template; }
@@ -28,6 +28,12 @@ protected:
               m_name(name),
               m_template(templ)
         { }
+        void Update(const QString &task, const QString &name)
+        {
+            m_task = task;
+            m_name = name;
+            emit stepChanged();
+        }
 
         virtual ~StepPage() {}
 

@@ -8,7 +8,9 @@ class QAction;
 class QMenu;
 QT_END_NAMESPACE
 
+namespace guimodel {
 struct IGuiModel;
+}
 class TabWidget;
 class HtmlPageWidget;
 
@@ -17,13 +19,14 @@ class MainWindow : public QMainWindow, private Ui_MainWindow
     Q_OBJECT
 
 public:
-    MainWindow(IGuiModel& model, QWidget *parent = 0);
+    MainWindow(guimodel::IGuiModel& model, QWidget *parent = 0);
 
 protected:
     void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
     void on_lessonReady();
+    void on_stepChanged(size_t i);
     void on_tabClicked(size_t i);
     void on_selectionChanged(size_t i, size_t old);
     void on_okButton_clicked();
@@ -54,6 +57,6 @@ private:
     QToolBar *fileToolBar;
     QToolBar *viewToolBar;
 
-    IGuiModel &m_guiModel;
+    guimodel::IGuiModel &m_guiModel;
     std::vector<std::pair<TabWidget*, HtmlPageWidget*>> m_stepWidgets;
 };

@@ -4,9 +4,10 @@
 
 #include "HtmlPageWidget.h"
 
-HtmlPageWidget::HtmlPageWidget(IGuiModel::IStep &step, QWidget *parent)
+HtmlPageWidget::HtmlPageWidget(guimodel::IStep &step, QWidget *parent)
     : QWidget(parent)
 {
     setupUi(this);
     step.GetPageController().MasterWebControl(*webView);
+    buttonsGroupWidget->setVisible(false);
 }

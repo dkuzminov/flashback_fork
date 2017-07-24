@@ -23,6 +23,15 @@ TabWidget::TabWidget(const QString &id, const QString &task, const QString &desc
     m_descriptionLabel->setText(m_description);
 }
 
+void TabWidget::Update(const QString &task, const QString &description)
+{
+    // Why do I really need these as members?..
+    m_task = task;
+    m_description = description;
+    m_taskLabel->setText(m_task);
+    m_descriptionLabel->setText(m_description);
+}
+
 void TabWidget::setHighlighted(bool enabled)
 {
     QPalette _palette = GuiPalette::Get().GetPalette();

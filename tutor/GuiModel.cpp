@@ -72,15 +72,21 @@ void GuiModel::Start()
     else {
         m_coach->PrepareLesson();
         for (int i = 0; i < m_coach->GetCount(); ++i) {
+            auto &coachStep = m_coach->GetStep(i);
             m_steps.push_back(
                     std::shared_ptr<Step>(
-                            new Step(m_coach->GetStep(i).GetTaskType(),
-                                     m_coach->GetStep(i).GetName(),
+                            new Step(coachStep.GetTaskType(),
+                                     coachStep.GetName(),
                                      ExercisePageController::Get(
-                                             m_coach->GetStep(i).GetPageContents().GetTemplate(),
+                                             coachStep.GetPageContents().GetTemplate(),
                                              m_style,
-                                             m_coach->GetStep(i).GetPageContents().GetTOMObject()
+                                             coachStep.GetPageContents().GetTOMObject()
                                              ))));
+            Step *step = m_steps[i].get();
+            QObject::connect(&(coach::IStep&)coachStep, &coach::IStep::stepChanged, [=]() {
+                auto &coachStep = m_coach->GetStep(i);
+                step->Update(coachStep.GetTaskType(), coachStep.GetName());
+            });
         }
     }
 }
@@ -93,3 +99,9 @@ void GuiModel::SelectStep(size_t i)
     }
 }
 
+void GuiModel::Step::Update(QString task, QString name)
+{
+    m_task = task;
+    m_name = name;
+    emit changed();
+}

@@ -9,6 +9,7 @@ class TabWidget : public QWidget,  public Ui_TabWidget
 public:
     TabWidget(const QString &id, const QString &task, const QString &description, bool isLight, QWidget *parent);
     void setHighlighted(bool enabled);
+    void Update(const QString &task, const QString &description);
 
 private slots:
     void selectedChanged(int);

@@ -2,13 +2,15 @@
 
 #include "interface/IRepository.h"
 #include <QtSql/QtSql>
-//#include <memory>
+#include <memory>
+
+struct IDatabase;
 
 class User : public IRepository::IUser,
              private IRepository::IProfile
 {
 public:
-    User(QString name, QString path, QString libraryDbFilename, bool createNew = false);
+    User(IDatabase& owner, QString name, QString path, QString libraryDbFilename, bool createNew = false);
 
 private:
     class Variable : public IRepository::IVariable
@@ -51,15 +53,17 @@ private:
     // IProfile:
     QString GetProfileName() { return "Stub"; }
     IRepository::IVariable* GetVariable(QString name);
-    IRepository::ILanguage& GetLanguage() { throw "Not implemented"; }
+    IRepository::ILanguage& GetLanguage();
     QString GetCoachType() { return "Alexandra"; }
     IRepository::IStatistics* GetStatistics() { return NULL; }
     IRepository::IBookmark* GetBookmark(QString id);
     IRepository::ILibrary& GetPersonalLibrary() { throw "Not implemented"; }
 
+    IDatabase& m_owner;
     QString m_name;
     QString m_filename;
     QSqlDatabase m_userDatabase;
     QMap<QString, Variable> m_variables;
     QMap<QString, Bookmark> m_bookmarks;
+    IRepository::ILanguage *m_language;
 };

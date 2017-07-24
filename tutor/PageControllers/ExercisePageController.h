@@ -3,18 +3,9 @@
 #include <QObject>
 #include <memory>
 
-class TOMController : public QObject
+class ExercisePageController : public guimodel::IPageController
 {
-    Q_OBJECT
-
-public slots:
-    virtual void attachObject() = 0;
-};
-
-class ExercisePageController : public IGuiModel::IPageController,
-                               private TOMController
-{
-    // IGuiModel::IPageController
+    // IGuiModel::IPageController:
     void MasterWebControl(QWebView &webView);
 
     // TOMController:

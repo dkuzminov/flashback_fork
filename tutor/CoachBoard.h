@@ -11,10 +11,10 @@ class CoachBoard
 {
 public:
     static CoachBoard& Get();
-    ICoach* Select(QString couchType,
-                   IRepository::IProfile &profile);
-    ICoach* SelectDemo();
-    inline ICoach& GetCoach();
+    coach::ICoach* Select(QString couchType,
+                          IRepository::IProfile &profile);
+    coach::ICoach* SelectDemo();
+    inline coach::ICoach& GetCoach();
 
 private:
     CoachBoard();

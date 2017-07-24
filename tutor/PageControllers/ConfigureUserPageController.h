@@ -5,7 +5,7 @@
 
 class ConfigureUserPageController_impl;
 
-class ConfigureUserPageController : public IGuiModel::IPageController
+class ConfigureUserPageController : public guimodel::IPageController
 {
     void MasterWebControl(QWebView &webView);
 

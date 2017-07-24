@@ -19,7 +19,7 @@ void ExercisePageController::MasterWebControl(QWebView &webView)
     m_webView = &webView;
     QWebPage* webPage = webView.page();
     QWebFrame* webFrame = webPage->mainFrame();
-    connect(webFrame, &QWebFrame::javaScriptWindowObjectCleared, this, &TOMController::attachObject);
+    connect(webFrame, &QWebFrame::javaScriptWindowObjectCleared, this, &ExercisePageController::attachObject);
 
     QString pageTemplate =
             "<html><head><style id='general'>%style%</style></head><body>%body%</body></html>";

@@ -22,14 +22,14 @@ void AlexandraCoach::PrepareLesson()
     for (size_t i = 0; i < words.size(); ++i) {
         QuestionStep *step = new QuestionStep(*this,
                                               i,
-                                              "Translate word",
+                                              "Translate the word",
                                               html,
                                               words[i].first,
                                               words[i].second);
         x_AddStepPage(std::unique_ptr<StepPage>(step));
     }
 
-    m_results.assign(5, false);
+    m_results.assign(5, 0);
 
     {
         QFile file(":/html/templates/tests/Summary");
@@ -37,6 +37,7 @@ void AlexandraCoach::PrepareLesson()
         QTextStream in(&file);
         QString html =  in.readAll();
         m_summaryStep = new SummaryStep(*this, "Test Results", html);
+        m_summaryStep->signalChanged(0, 0, m_results.size());
         x_AddStepPage(std::unique_ptr<StepPage>(m_summaryStep));
     }
 }
@@ -46,7 +47,7 @@ void AlexandraCoach::setAnswerStatus(size_t questionIndex, int status)
     m_results[questionIndex] = status;
     int correct = std::count(m_results.begin(), m_results.end(), 1);
     int mistakes = std::count(m_results.begin(), m_results.end(), -1);
-    m_summaryStep->signalChanged(correct, mistakes);
+    m_summaryStep->signalChanged(correct, mistakes, m_results.size());
 }
 
 void AlexandraCoach::QuestionStep::onchange(QString value)
