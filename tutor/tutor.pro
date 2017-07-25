@@ -5,6 +5,7 @@ HEADERS =   MainWindow.h \
     interface/IGuiModel.h \
     interface/IRepository.h \
     interface/IGuiPage.h \
+    Repositories/AristotleDatabase.h \
     Repositories/SQLite/Database.h \
     Repositories/SQLite/Language.h \
     Repositories/SQLite/User.h \
@@ -34,6 +35,7 @@ SOURCES =   main.cpp \
     CoachBoard/AlexandraCoach.cpp \
     CoachBoard/DemoCoach.cpp \
     CoachBoard/NaiveCoach.cpp \
+    Repositories/AristotleDatabase.cpp \
     Repositories/SQLite/Database.cpp \
     Repositories/SQLite/Language.cpp \
     Repositories/SQLite/User.cpp \

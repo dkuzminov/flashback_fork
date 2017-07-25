@@ -43,7 +43,7 @@ class AlexandraCoach : public BaseCoach,
     void setAnswerStatus(size_t questionIndex, int status);
 
 public:
-    AlexandraCoach(IRepository::IProfile &profile);
+    AlexandraCoach(repository::IProfile &profile);
 
 private:
     class QuestionStep : public BaseCoach::StepPage,
@@ -103,7 +103,7 @@ private:
 
     void PrepareLesson();
 
-    IRepository::IProfile &m_profile;
+    repository::IProfile &m_profile;
     SummaryStep *m_summaryStep;
     std::vector<int> m_results;
 };

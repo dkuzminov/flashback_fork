@@ -4,7 +4,7 @@
 #include <QTextStream>
 #include <QMessageBox>
 
-AlexandraCoach::AlexandraCoach(IRepository::IProfile &profile)
+AlexandraCoach::AlexandraCoach(repository::IProfile &profile)
     : m_profile(profile)
 {
     LOG(Note, "Enter AlexandraCoach::AlexandraCoach()");

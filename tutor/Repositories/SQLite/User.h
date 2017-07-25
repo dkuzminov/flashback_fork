@@ -6,14 +6,14 @@
 
 struct IDatabase;
 
-class User : public IRepository::IUser,
-             private IRepository::IProfile
+class User : public repository::IUser,
+             private repository::IProfile
 {
 public:
     User(IDatabase& owner, QString name, QString path, QString libraryDbFilename, bool createNew = false);
 
 private:
-    class Variable : public IRepository::IVariable
+    class Variable : public repository::IVariable
     {
     public:
         Variable() {}
@@ -25,8 +25,8 @@ private:
         QString m_value;
     };
 
-    class Bookmark : public IRepository::IBookmark,
-                     private IRepository::IPage
+    class Bookmark : public repository::IBookmark,
+                     private repository::IPage
     {
     public:
         Bookmark() {}
@@ -48,22 +48,21 @@ private:
 
     // IUser:
     QString GetName() { return m_name; }
-    IRepository::IProfile& GetProfile() { return *this; }
+    repository::IProfile& GetProfile() { return *this; }
 
     // IProfile:
     QString GetProfileName() { return "Stub"; }
-    IRepository::IVariable* GetVariable(QString name);
-    IRepository::ILanguage& GetLanguage();
+    repository::IVariable* GetVariable(QString name);
+    repository::ILanguage& GetLanguage();
     QString GetCoachType() { return "Alexandra"; }
-    IRepository::IStatistics* GetStatistics() { return NULL; }
-    IRepository::IBookmark* GetBookmark(QString id);
-    IRepository::ILibrary& GetPersonalLibrary() { throw "Not implemented"; }
+    repository::IBookmark* GetBookmark(QString id);
+    repository::ILibrary& GetPersonalLibrary() { throw "Not implemented"; }
 
     IDatabase& m_owner;
     QString m_name;
     QString m_filename;
     QSqlDatabase m_userDatabase;
-    QMap<QString, Variable> m_variables;
-    QMap<QString, Bookmark> m_bookmarks;
-    IRepository::ILanguage *m_language;
+    QMap<QString, std::shared_ptr<Variable>> m_variables;
+    QMap<QString, std::shared_ptr<Bookmark>> m_bookmarks;
+    repository::ILanguage *m_language;
 };

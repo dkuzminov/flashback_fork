@@ -3,8 +3,8 @@
 #include "interface/IRepository.h"
 #include <QtSql/QtSql>
 
-class Language : public IRepository::ILanguage,
-                 private IRepository::IDictionary
+class Language : public repository::ILanguage,
+                 private repository::IDictionary
 {
 public:
     Language(QString name, QString path);

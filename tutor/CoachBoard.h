@@ -12,7 +12,7 @@ class CoachBoard
 public:
     static CoachBoard& Get();
     coach::ICoach* Select(QString couchType,
-                          IRepository::IProfile &profile);
+                          repository::IProfile &profile);
     coach::ICoach* SelectDemo();
     inline coach::ICoach& GetCoach();
 

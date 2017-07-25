@@ -17,7 +17,7 @@ CoachBoard::CoachBoard()
 }
 
 coach::ICoach* CoachBoard::Select(QString type,
-                                  IRepository::IProfile &profile)
+                                  repository::IProfile &profile)
 {
     // Temporary remove any other coaches
     /*if (type == "Naive") {

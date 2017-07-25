@@ -14,9 +14,9 @@ MockRepository::MockRepository()
 
 }
 
-class Bookmark : public IRepository::IVariable,
-                 public IRepository::IBookmark,
-                 public IRepository::IPage
+class Bookmark : public repository::IVariable,
+                 public repository::IBookmark,
+                 public repository::IPage
 {
 public:
     Bookmark(QString variableValue, QString resourceName)
@@ -45,7 +45,7 @@ private:
 static Bookmark TextbookBookmark("text", ":/html/templates/demo/mock_repository/TextbookPage1");
 static Bookmark FictionBookmark("fiction", ":/html/templates/demo/mock_repository/FictionPage1");
 
-IRepository::IVariable* MockRepository::GetVariable(QString name)
+repository::IVariable* MockRepository::GetVariable(QString name)
 {
     if (name == "TextbookBookmark") {
         return &TextbookBookmark;
@@ -56,7 +56,7 @@ IRepository::IVariable* MockRepository::GetVariable(QString name)
     return NULL;
 }
 
-IRepository::IBookmark* MockRepository::GetBookmark(QString id)
+repository::IBookmark* MockRepository::GetBookmark(QString id)
 {
     if (id == "text") {
         return &TextbookBookmark;

@@ -9,11 +9,10 @@ class Language;
 
 struct IDatabase
 {
-    virtual IRepository::ILanguage* GetLanguage(QString name) = 0;
+    virtual repository::ILanguage* GetLanguage(QString name) = 0;
 };
 
-class Database : public QObject,
-                 private IRepository,
+class Database : private repository::IRepository,
                  private IDatabase
 {
     Q_OBJECT
@@ -27,10 +26,10 @@ public:
 
 private:
     Database();
-    IUser* GetUser();
+    repository::IUser* GetUser();
 
     // IDatabase:
-    ILanguage* GetLanguage(QString name);
+    repository::ILanguage* GetLanguage(QString name);
 
     void x_RemoveDatabaseFiles();
     void x_RemoveDirectory(const QString &dirName);

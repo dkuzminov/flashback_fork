@@ -1,4 +1,8 @@
 <RCC>
+    <qresource prefix="/sql/Aristotle">
+        <file alias="tables">../database/scripts/Aristotle/tables.sql</file>
+        <file alias="values">../database/scripts/Aristotle/values.sql</file>
+    </qresource>
     <qresource prefix="/sql/Core">
         <file alias="tables">../database/scripts/Core.tables.sql</file>
         <file alias="values">../database/scripts/Core.values.sql</file>

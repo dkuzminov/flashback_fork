@@ -17,15 +17,16 @@ Database::Database()
     m_coreDatabase = QSqlDatabase::addDatabase("QSQLITE", "Core");
 }
 
-IRepository& Database::GetRepository()
+repository::IRepository& Database::GetRepository()
 {
     if (BasicSettings::Get().UseMockRepository()) {
         return MockRepository::Get();
     }
+    //return AristotleDatabase::Get();
     return *this;
 }
 
-IRepository::IUser* Database::GetUser() { return m_user.get(); }
+repository::IUser* Database::GetUser() { return m_user.get(); }
 
 bool Database::Connect(const QString &path)
 {
@@ -44,7 +45,7 @@ bool Database::Connect(const QString &path)
     return true;
 }
 
-IRepository::ILanguage* Database::GetLanguage(QString name)
+repository::ILanguage* Database::GetLanguage(QString name)
 {
     if (!m_language) {
         m_language.reset(new Language(name, m_path + "Languages/"));

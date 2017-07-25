@@ -34,7 +34,7 @@ User::User(IDatabase& owner, QString name, QString path, QString libraryDbFilena
         LOG(Error, "Failed to attach Library database");
     }
 
-    IRepository::IVariable* var = GetVariable("Language");
+    repository::IVariable* var = GetVariable("Language");
     if (var) {
         m_language = owner.GetLanguage(var->GetValue());
     }
@@ -45,11 +45,11 @@ User::User(IDatabase& owner, QString name, QString path, QString libraryDbFilena
     }
 }
 
-IRepository::IVariable* User::GetVariable(QString name)
+repository::IVariable* User::GetVariable(QString name)
 {
     auto iter = m_variables.find(name);
     if (iter != m_variables.end()) {
-        return &iter.value();
+        return iter.value().get();
     }
 
     QSqlQuery query(m_userDatabase);
@@ -59,17 +59,17 @@ IRepository::IVariable* User::GetVariable(QString name)
     if (query.next()) {
         QString value = query.value(0).toString();
         LOG(Note, "Read value = " + value);
-        iter = m_variables.insert(name, value);
-        return &iter.value();
+        iter = m_variables.insert(name, std::make_shared<Variable>(value));
+        return iter.value().get();
     }
     return NULL;
 }
 
-IRepository::IBookmark* User::GetBookmark(QString id)
+repository::IBookmark* User::GetBookmark(QString id)
 {
     auto iter = m_bookmarks.find(id);
     if (iter != m_bookmarks.end()) {
-        return &iter.value();
+        return iter.value().get();
     }
 
     QSqlQuery query(m_userDatabase);
@@ -80,13 +80,13 @@ IRepository::IBookmark* User::GetBookmark(QString id)
         QString book_id = query.value(0).toString();
         QString page_id = query.value(1).toString();
         LOG(Note, "Read book_id = " + book_id);
-        iter = m_bookmarks.insert(id, Bookmark(book_id, page_id, m_userDatabase));
-        return &iter.value();
+        iter = m_bookmarks.insert(id, std::make_shared<Bookmark>(book_id, page_id, m_userDatabase));
+        return iter.value().get();
     }
     return NULL;
 }
 
-IRepository::ILanguage& User::GetLanguage()
+repository::ILanguage& User::GetLanguage()
 {
     return *m_language;
 }
