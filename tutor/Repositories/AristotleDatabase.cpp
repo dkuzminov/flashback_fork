@@ -116,8 +116,9 @@ std::vector<std::pair<QString, QString>> AristotleDatabase::GetNWordPairs(size_t
     std::vector<std::pair<QString, QString>> result;
 
     QSqlQuery query(m_sqliteDatabase);
-    query.prepare("SELECT Word, Translation FROM Words ORDER BY Random() LIMIT :num");
+    query.prepare("SELECT Word, Translation FROM Words WHERE hits<:max_hits ORDER BY Random() LIMIT :num");
     query.bindValue(":num", num);
+    query.bindValue(":max_hits", 10);
 
     query.exec();
     while (query.next()) {
@@ -126,6 +127,17 @@ std::vector<std::pair<QString, QString>> AristotleDatabase::GetNWordPairs(size_t
         result.push_back(std::make_pair(word, translation));
     }
     return std::move(result);
+}
+
+void AristotleDatabase::RecordAnswer(const QString& word, bool isCorrect)
+{
+    QSqlQuery query(m_sqliteDatabase);
+    if (isCorrect)
+        query.prepare("UPDATE Words SET hits=hits+1 WHERE word=:word");
+    else
+        query.prepare("UPDATE Words SET hits=hits-1 WHERE word=:word AND hits>0");
+    query.bindValue(":word", word);
+    query.exec();
 }
 
 void AristotleDatabase::x_ReadVariables()

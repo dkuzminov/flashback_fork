@@ -19,35 +19,26 @@ void AlexandraCoach::PrepareLesson()
     MultipleQuestionsStep *step =
             new MultipleQuestionsStep(*this, "Translate the word", words);
     x_AddStepPage(std::unique_ptr<StepPage>(step));
-
-    m_results.assign(5, 0);
-
-    {
-        QFile file(":/html/templates/tests/Summary");
-        file.open(QFile::ReadOnly | QFile::Text);
-        QTextStream in(&file);
-        QString html =  in.readAll();
-        m_summaryStep = new SummaryStep(*this, "Test Results", html);
-        m_summaryStep->signalChanged(0, 0, m_results.size());
-        x_AddStepPage(std::unique_ptr<StepPage>(m_summaryStep));
-    }
 }
 
-void AlexandraCoach::setAnswerStatus(size_t questionIndex, int status)
+void AlexandraCoach::reportAnswer(const QString &word, bool isCorrect)
 {
-    m_results[questionIndex] = status;
-    int correct = std::count(m_results.begin(), m_results.end(), 1);
-    int mistakes = std::count(m_results.begin(), m_results.end(), -1);
-    m_summaryStep->signalChanged(correct, mistakes, m_results.size());
+    m_profile.GetLanguage().GetDictionary().RecordAnswer(word, isCorrect);
 }
 
 void AlexandraCoach::MultipleQuestionsStep::onanswer(QString value)
 {
     m_answers.push_back(value);
-    if (value == m_questions[m_questionIndex].second)
+    QString question = m_questions[m_questionIndex].first;
+    QString correctAnswer = m_questions[m_questionIndex].second;
+    if (value == correctAnswer) {
         ++m_correct;
-    else
+        m_owner.reportAnswer(question, true);
+    }
+    else {
         ++m_mistakes;
+        m_owner.reportAnswer(question, false);
+    }
     x_MoveNext();
 }
 

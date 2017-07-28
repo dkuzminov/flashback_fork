@@ -45,14 +45,14 @@ signals:
 
 struct IAlexandraCoach
 {
-    virtual void setAnswerStatus(size_t questionIndex, int status) = 0;
+    virtual void reportAnswer(const QString &word, bool isCorrect) = 0;
 };
 
 class AlexandraCoach : public BaseCoach,
                        private IAlexandraCoach
 {
     // IAlexandraCoach:
-    void setAnswerStatus(size_t questionIndex, int status);
+    void reportAnswer(const QString &word, bool isCorrect);
 
 public:
     AlexandraCoach(repository::IProfile &profile);
@@ -146,5 +146,4 @@ private:
 
     repository::IProfile &m_profile;
     SummaryStep *m_summaryStep;
-    std::vector<int> m_results;
 };
