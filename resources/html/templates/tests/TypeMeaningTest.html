@@ -1,6 +1,15 @@
 ﻿<h3>Find a translation for the word:</h3>
 <p id='word'>__word__</p>
-<input oninput="tutor.onchange(this.value)"/>
+<input id='input' onkeypress='if(event.keyCode == 13) document.getElementById("ok").click()' onkeyup='if(event.keyCode == 27) document.getElementById("skip").click()' oninput='document.getElementById("ok").disabled = (this.value == "")'/>
 <script>
    document.getElementById("word").innerHTML = tutor.getWord();
+   document.getElementById("input").focus();
 </script>
+<div>
+<button type="button" id="skip" style="width: 70px" onclick="tutor.onskip()">Skip</button>
+<button type="button" id="ok" disabled style="width: 70px" onclick='tutor.onanswer(document.getElementById("input").value)'>Ok</button>
+</div>
+<div><a href='javascript:document.getElementById("more").style.visibility = "visible"'>more</a></div>
+<div id="more" style="visibility: hidden; border-style: solid; border-width: 1px; border-color: lightblue;">
+<button type="button" onclick="tutor.neverAskItAgain()">Never ask it again</button>
+</div>

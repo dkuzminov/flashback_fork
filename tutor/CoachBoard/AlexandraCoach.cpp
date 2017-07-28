@@ -13,21 +13,12 @@ AlexandraCoach::AlexandraCoach(repository::IProfile &profile)
 void AlexandraCoach::PrepareLesson()
 {
     LOG(Note, "Enter AlexandraCoach::PrepareLesson()");
-    QFile file(":/html/templates/tests/TypeMeaningTest");
-    file.open(QFile::ReadOnly | QFile::Text);
-    QTextStream in(&file);
-    QString html =  in.readAll();
 
     auto words = m_profile.GetLanguage().GetDictionary().GetNWordPairs(5);
-    for (size_t i = 0; i < words.size(); ++i) {
-        QuestionStep *step = new QuestionStep(*this,
-                                              i,
-                                              "Translate the word",
-                                              html,
-                                              words[i].first,
-                                              words[i].second);
-        x_AddStepPage(std::unique_ptr<StepPage>(step));
-    }
+
+    MultipleQuestionsStep *step =
+            new MultipleQuestionsStep(*this, "Translate the word", words);
+    x_AddStepPage(std::unique_ptr<StepPage>(step));
 
     m_results.assign(5, 0);
 
@@ -50,7 +41,31 @@ void AlexandraCoach::setAnswerStatus(size_t questionIndex, int status)
     m_summaryStep->signalChanged(correct, mistakes, m_results.size());
 }
 
-void AlexandraCoach::QuestionStep::onchange(QString value)
+void AlexandraCoach::MultipleQuestionsStep::onanswer(QString value)
 {
-    m_owner.setAnswerStatus(m_index, value.isEmpty()? 0: value == m_correctAnswer? 1: -1);
+    m_answers.push_back(value);
+    if (value == m_questions[m_questionIndex].second)
+        ++m_correct;
+    else
+        ++m_mistakes;
+    x_MoveNext();
+}
+
+void AlexandraCoach::MultipleQuestionsStep::onskip()
+{
+    m_answers.push_back("");
+    ++m_skipped;
+    x_MoveNext();
+}
+
+void AlexandraCoach::MultipleQuestionsStep::x_MoveNext()
+{
+    ++m_questionIndex;
+    emit invalidated();
+    if (m_questionIndex < m_questions.size())
+        Update("Translate the word", m_questions[m_questionIndex].first);
+    else {
+        Update("Translate the word", "Resume");
+        emit finished();
+    }
 }

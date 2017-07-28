@@ -13,6 +13,7 @@
         <file alias="TypeMeaningTest">../resources/html/templates/tests/TypeMeaningTest.html</file>
         <file alias="SelectMeaningTest">../resources/html/templates/tests/SelectMeaningTest.html</file>
         <file alias="NounMarkersTest">../resources/html/templates/tests/NounMarkersTest.html</file>
+        <file alias="Resume">../resources/html/templates/tests/Resume.html</file>
         <file alias="Summary">../resources/html/templates/tests/Summary.html</file>
     </qresource>
     <qresource prefix="/css">

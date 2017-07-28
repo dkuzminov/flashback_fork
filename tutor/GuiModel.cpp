@@ -81,14 +81,17 @@ void GuiModel::Start()
                             new Step(coachStep.GetTaskType(),
                                      coachStep.GetName(),
                                      ExercisePageController::Get(
-                                             coachStep.GetPageContents().GetTemplate(),
-                                             m_style,
-                                             coachStep.GetPageContents().GetTOMObject()
+                                             coachStep.GetPageContents(),
+                                             m_style
                                              ))));
             Step *step = m_steps[i].get();
             QObject::connect(&(coach::IStep&)coachStep, &coach::IStep::stepChanged, [=]() {
                 auto &coachStep = m_coach->GetStep(i);
                 step->Update(coachStep.GetTaskType(), coachStep.GetName());
+            });
+            QObject::connect(&(coach::IStep&)coachStep, &coach::IStep::invalidated, [=]() {
+                auto &coachStep = m_coach->GetStep(i);
+                step->Invalidate();
             });
         }
     }
@@ -107,4 +110,9 @@ void GuiModel::Step::Update(QString task, QString name)
     m_task = task;
     m_name = name;
     emit changed();
+}
+
+void GuiModel::Step::Invalidate()
+{
+    emit invalidated();
 }

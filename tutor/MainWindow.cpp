@@ -143,6 +143,9 @@ void MainWindow::on_lessonReady()
         connect(&(guimodel::IStep&)step, &guimodel::IStep::changed, [=]() {
             this->on_stepChanged(i);
         });
+        connect(&(guimodel::IStep&)step, &guimodel::IStep::invalidated, [=]() {
+            this->on_stepInvalidated(i);
+        });
         TabWidget *tabWidget = new TabWidget("", task, name, isLight, this);
         HtmlPageWidget *htmlPageWidget = new HtmlPageWidget(step, NULL);
         verticalLayout->addWidget(tabWidget);
@@ -169,6 +172,11 @@ void MainWindow::on_stepChanged(size_t i)
     auto &lesson = m_guiModel.GetLesson();
     guimodel::IStep &step = lesson.GetStep(i);
     m_stepWidgets[i].first->Update(step.GetTask(), step.GetName());
+}
+
+void MainWindow::on_stepInvalidated(size_t i)
+{
+    m_stepWidgets[i].second->Invalidate();
 }
 
 void MainWindow::on_tabClicked(size_t i)

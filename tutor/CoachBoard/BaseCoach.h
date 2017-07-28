@@ -1,6 +1,8 @@
 #pragma once
 
 #include "interface/ICoach.h"
+#include <QFile>
+#include <QTextStream>
 #include <memory>
 
 class BaseCoach : public coach::ICoach
@@ -14,6 +16,7 @@ protected:
     class StepPage : public coach::IStep,
                      private coach::IPageContents
     {
+    protected:
         // ICoach::IStep:
         virtual QString GetTaskType() { return m_task; }
         virtual QString GetName() { return m_name; }
@@ -36,6 +39,15 @@ protected:
         }
 
         virtual ~StepPage() {}
+
+    protected:
+        static QString x_ReadFileFromResource(const QString &resourceName)
+        {
+            QFile file(resourceName);
+            file.open(QFile::ReadOnly | QFile::Text);
+            QTextStream in(&file);
+            return in.readAll();
+        }
 
     private:
         QString m_task;

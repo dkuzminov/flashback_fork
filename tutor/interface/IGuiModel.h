@@ -29,6 +29,7 @@ public:
 
 signals:
     void changed();
+    void invalidated();
 };
 
 

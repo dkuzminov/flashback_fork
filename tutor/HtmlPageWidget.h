@@ -13,6 +13,7 @@ class HtmlPageWidget : public QWidget,  public Ui_HtmlPageWidget
     Q_OBJECT
 public:
     HtmlPageWidget(guimodel::IStep &step, QWidget *parent);
+    void Invalidate();
 
 private slots:
 
@@ -20,4 +21,5 @@ signals:
 
 private:
     QWebView *pageView;
+    guimodel::IStep &m_step;
 };

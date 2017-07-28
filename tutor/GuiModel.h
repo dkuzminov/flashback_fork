@@ -29,6 +29,7 @@ private:
             : m_task(task), m_name(name), m_pageController(controller)
         {}
         void Update(QString task, QString name);
+        void Invalidate();
     private:
         QString m_task;
         QString m_name;

@@ -8,10 +8,10 @@
 
 
 std::unique_ptr<ExercisePageController>
-        ExercisePageController::Get(QString bodyTemplate, QString styleTemplate, QObject *object)
+        ExercisePageController::Get(coach::IPageContents &pageContents, QString styleTemplate)
 {
     return std::unique_ptr<ExercisePageController>(
-                new ExercisePageController(bodyTemplate, styleTemplate, object));
+                new ExercisePageController(pageContents, styleTemplate));
 }
 
 void ExercisePageController::MasterWebControl(QWebView &webView)
@@ -26,14 +26,15 @@ void ExercisePageController::MasterWebControl(QWebView &webView)
     if (BasicSettings::Get().NeedApplyStylesImmediately()) {
         pageTemplate.replace("%style%", m_styleTemplate);
     }
-    webView.setHtml(pageTemplate.replace("%body%", m_bodyTemplate));
+    webView.setHtml(pageTemplate.replace("%body%", m_pageContents.GetTemplate()));
 }
 
 void ExercisePageController::attachObject()
 {
     QWebPage* webPage = m_webView->page();
     QWebFrame* webFrame = webPage->mainFrame();
-    if (m_tomObject) {
-        webFrame->addToJavaScriptWindowObject(QString("tutor"), m_tomObject);
+    QObject *tomObject = m_pageContents.GetTOMObject();
+    if (tomObject) {
+        webFrame->addToJavaScriptWindowObject(QString("tutor"), tomObject);
     }
 }

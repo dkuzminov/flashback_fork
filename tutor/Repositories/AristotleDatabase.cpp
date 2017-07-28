@@ -78,8 +78,10 @@ bool AristotleDatabase::Autogenerate(const QString &path)
     for (auto script : scriptList) {
         QFile scriptFile(script);
         scriptFile.open(QIODevice::ReadOnly);
+        QTextStream stream(&scriptFile);
+        stream.setCodec("UTF-8");
         QStringList queryList =
-                QTextStream(&scriptFile).readAll().split(";", QString::SkipEmptyParts);
+                stream.readAll().split(";", QString::SkipEmptyParts);
         for (auto queryStr : queryList) {
             LOG(Warning, "Executing query: " + queryStr);
             query.exec(queryStr);
