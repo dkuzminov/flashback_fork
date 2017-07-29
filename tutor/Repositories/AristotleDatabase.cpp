@@ -99,7 +99,7 @@ repository::IVariable* AristotleDatabase::GetVariable(QString name)
     }
 
     QSqlQuery query(m_sqliteDatabase);
-    query.prepare("SELECT value FROM Variable WHERE name = :name");
+    query.prepare("SELECT value FROM Variables WHERE name = :name");
     query.bindValue(":name", name);
     query.exec();
     if (query.next()) {
@@ -116,9 +116,14 @@ std::vector<std::pair<QString, QString>> AristotleDatabase::GetNWordPairs(size_t
     std::vector<std::pair<QString, QString>> result;
 
     QSqlQuery query(m_sqliteDatabase);
-    query.prepare("SELECT Word, Translation FROM Words WHERE hits<:max_hits ORDER BY Random() LIMIT :num");
+    query.prepare(
+                "SELECT Word, Translation "
+                "FROM Words "
+                "WHERE "
+                "   hits<(SELECT CAST(value AS DECIMAL) FROM Variables WHERE name='MaxHits') "
+                "ORDER BY Random() "
+                "LIMIT :num");
     query.bindValue(":num", num);
-    query.bindValue(":max_hits", 10);
 
     query.exec();
     while (query.next()) {
@@ -143,7 +148,7 @@ void AristotleDatabase::RecordAnswer(const QString& word, bool isCorrect)
 double AristotleDatabase::GetProgress()
 {
     QSqlQuery query(m_sqliteDatabase);
-    query.prepare("SELECT SUM(hits) * 10 / COUNT(*) FROM Words");
+    query.prepare("SELECT SUM(hits) * 100 / COUNT(*) / (SELECT CAST(value AS DECIMAL) FROM Variables WHERE name='MaxHits') FROM Words");
     query.exec();
     query.next();
     double result = query.value(0).toDouble();

@@ -14,7 +14,12 @@ void AlexandraCoach::PrepareLesson()
 {
     LOG(Note, "Enter AlexandraCoach::PrepareLesson()");
 
-    auto words = m_profile.GetLanguage().GetDictionary().GetNWordPairs(5);
+    int stepsPerLesson = m_profile.GetVariable("StepsPerLesson")->GetValue().toInt();
+    if (stepsPerLesson == 0) {
+        LOG(Error, "Invalid value of the variable 'StepsPerLesson'");
+        stepsPerLesson = 10;
+    }
+    auto words = m_profile.GetLanguage().GetDictionary().GetNWordPairs(stepsPerLesson);
 
     MultipleQuestionsStep *step =
             new MultipleQuestionsStep(*this, "Translate the word", words);
