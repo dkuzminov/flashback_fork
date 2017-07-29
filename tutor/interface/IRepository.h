@@ -20,6 +20,7 @@ class IDictionary : public QObject
 public:
     virtual std::vector<std::pair<QString, QString>> GetNWordPairs(size_t num) = 0;
     virtual void RecordAnswer(const QString& word, bool isCorrect) = 0;
+    virtual double GetProgress() = 0;
 };
 
 // ToDo rename to Thesaurus

@@ -140,6 +140,16 @@ void AristotleDatabase::RecordAnswer(const QString& word, bool isCorrect)
     query.exec();
 }
 
+double AristotleDatabase::GetProgress()
+{
+    QSqlQuery query(m_sqliteDatabase);
+    query.prepare("SELECT SUM(hits) * 10 / COUNT(*) FROM Words");
+    query.exec();
+    query.next();
+    double result = query.value(0).toDouble();
+    return result;
+}
+
 void AristotleDatabase::x_ReadVariables()
 {
     QSqlQuery query(m_sqliteDatabase);

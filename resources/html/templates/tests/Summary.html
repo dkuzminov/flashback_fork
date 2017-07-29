@@ -1,14 +1,11 @@
-﻿<h3>The result of your test:</h3>
-<p><span id=correct></span> correct</p>
-<p><span id=mistakes></span> mistakes</p>
+﻿<h3>Your progress:</h3>
+<p>You've learned <span id=progress></span>% of words.</p>
 <script>
-    tutor.changed.connect(udpate);
-    udpate();
+    tutor.finished.connect(update);
+    update();
 
-    function udpate() {
-        correct = tutor.getCorrectNumber();
-        mistakes = tutor.getMistakesNumber();
-        document.getElementById("correct").innerHTML = correct;
-        document.getElementById("mistakes").innerHTML = mistakes;
+    function update() {
+        progress = tutor.getProgress();
+        document.getElementById("progress").innerHTML = progress;
     }
 </script>

@@ -17,6 +17,7 @@ private:
     // IRepository::IDictionary:
     std::vector<std::pair<QString, QString>> GetNWordPairs(size_t num);
     void RecordAnswer(const QString& word, bool isCorrect) { throw "Not implemented"; }
+    double GetProgress() { throw "Not implemented"; }
 
     QString m_languageName;
     QString m_filename;

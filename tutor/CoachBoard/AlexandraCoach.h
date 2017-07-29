@@ -27,25 +27,25 @@ public slots:
     virtual void onskip() = 0;
 };
 
-class SummaryTOMObject : public QObject
+class ProgressTOMObject : public QObject
 {
     Q_OBJECT
 
 public:
-    SummaryTOMObject() {}
+    ProgressTOMObject() {}
 
 public slots:
-    virtual int getCorrectNumber() = 0;
-    virtual int getMistakesNumber() = 0;
+    virtual double getProgress() = 0;
 
 signals:
-    void changed();
+    void finished();
 };
 
 
 struct IAlexandraCoach
 {
     virtual void reportAnswer(const QString &word, bool isCorrect) = 0;
+    virtual double getProgress() = 0;
 };
 
 class AlexandraCoach : public BaseCoach,
@@ -53,6 +53,7 @@ class AlexandraCoach : public BaseCoach,
 {
     // IAlexandraCoach:
     void reportAnswer(const QString &word, bool isCorrect);
+    double getProgress();
 
 public:
     AlexandraCoach(repository::IProfile &profile);
@@ -111,39 +112,32 @@ private:
         QString m_htmlResume;
     };
 
-    class SummaryStep : public BaseCoach::StepPage,
-                        private SummaryTOMObject
+    class ProgressStep : public BaseCoach::StepPage,
+                         private ProgressTOMObject
     {
         // ICoach::IStep:
-        QObject* GetTOMObject() { return static_cast<SummaryTOMObject*>(this); }
+        QObject* GetTOMObject() { return static_cast<ProgressTOMObject*>(this); }
 
         // SummaryTOMObject:
-        int getCorrectNumber() { return m_correct; }
-        int getMistakesNumber() { return m_mistakes; }
+        double getProgress() { return m_owner.getProgress(); }
     public:
-        SummaryStep(IAlexandraCoach &owner, const QString &type, const QString &html)
-            : BaseCoach::StepPage(type, "-", html),
-              SummaryTOMObject(),
-              m_owner(owner),
-              m_correct(0),
-              m_mistakes(0)
+        ProgressStep(IAlexandraCoach &owner, const QString &type)
+            : BaseCoach::StepPage(type, "-", x_ReadFileFromResource(":/html/templates/tests/Summary")),
+              ProgressTOMObject(),
+              m_owner(owner)
         {}
 
-        void signalChanged(int correct, int mistakes, int total)
+        void signalChanged()
         {
-            m_correct = correct;
-            m_mistakes = mistakes;
-            Update("Test Results", "progress " + QString::number(correct + mistakes) + " out of " + QString::number(total));
-            emit changed();
+            Update("Progress", "progress " + QString::number(getProgress()) + "%");
+            emit finished();
         }
     private:
         IAlexandraCoach &m_owner;
-        int m_correct;
-        int m_mistakes;
     };
 
     void PrepareLesson();
 
     repository::IProfile &m_profile;
-    SummaryStep *m_summaryStep;
+    ProgressStep *m_progressStep;
 };

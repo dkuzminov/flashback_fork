@@ -19,11 +19,22 @@ void AlexandraCoach::PrepareLesson()
     MultipleQuestionsStep *step =
             new MultipleQuestionsStep(*this, "Translate the word", words);
     x_AddStepPage(std::unique_ptr<StepPage>(step));
+
+    m_progressStep = new ProgressStep(*this, "Progress");
+    x_AddStepPage(std::unique_ptr<StepPage>(m_progressStep));
+    connect((QuestionTOMObject*)step, &QuestionTOMObject::finished, [=]() {
+        m_progressStep->signalChanged();
+    });
 }
 
 void AlexandraCoach::reportAnswer(const QString &word, bool isCorrect)
 {
     m_profile.GetLanguage().GetDictionary().RecordAnswer(word, isCorrect);
+}
+
+double AlexandraCoach::getProgress()
+{
+    return m_profile.GetLanguage().GetDictionary().GetProgress();
 }
 
 void AlexandraCoach::MultipleQuestionsStep::onanswer(QString value)

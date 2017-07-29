@@ -54,6 +54,7 @@ private:
     // IDictionary:
     std::vector<std::pair<QString, QString>> GetNWordPairs(size_t num);
     void RecordAnswer(const QString& word, bool isCorrect);
+    double GetProgress();
 
     void x_ReadVariables();
 
