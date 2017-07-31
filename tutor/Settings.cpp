@@ -1,4 +1,28 @@
 #include "Settings.h"
+#include <QDir>
+
+PersistentSettings& PersistentSettings::Get()
+{
+    static PersistentSettings instance;
+    return instance;
+}
+
+PersistentSettings::PersistentSettings()
+    : m_settings(QSettings::IniFormat, QSettings::UserScope, "Flashback Tutor")
+{
+}
+
+QString PersistentSettings::GetDatabasePath()
+{
+    QString path = m_settings.value("Database", "").toString();
+    QFileInfo check(path);
+    if (!check.exists() || !check.isFile()) {
+        path = QDir(QDir::currentPath()).filePath(HardcodedSettings::GetDefaultLanguage() + ".db");
+        m_settings.setValue("Database", path);
+    }
+    return path;
+}
+
 
 BasicSettings& BasicSettings::Get()
 {
@@ -16,4 +40,7 @@ BasicSettings::BasicSettings()
       m_colorScheme(HardcodedSettings::GetColorScheme()),
       m_databasePath(HardcodedSettings::GetDatabasePath())
 {
+    PersistentSettings &persistentSettings = PersistentSettings::Get();
+    if (m_databasePath.isEmpty() || !QFile(m_databasePath).exists())
+        m_databasePath = persistentSettings.GetDatabasePath();
 }
